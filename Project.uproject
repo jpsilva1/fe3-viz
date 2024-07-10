@@ -1,19 +1,18 @@
 {
 	"FileVersion": 3,
-	"Version": 26,
-	"VersionName": "2.6.0",
-	"FriendlyName": "Cesium for Unreal Samples",
 	"EngineAssociation": "5.4",
 	"Category": "Geospatial",
 	"Description": "Getting started samples for Cesium for Unreal plugin.",
-	"CreatedBy": "Cesium GS, Inc.",
-	"CreatedByURL": "https://cesium.com",
-	"DocsURL": "https://cesium.com/learn/unreal/",
-	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/c6639cbe970b4126847049944709a27a",
-	"SupportURL": "https://community.cesium.com",
-	"EngineVersion": "5.2.0",
-	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
+	"Modules": [
+		{
+			"Name": "Project",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	],
 	"Plugins": [
 		{
 			"Name": "CesiumForUnreal",
