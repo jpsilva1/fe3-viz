@@ -1,7 +1,7 @@
-// Copyright 2020-2021 CesiumGS, Inc. and Contributors
 
 #pragma once
 
+#include "PlaneActor.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "PlaneInit.generated.h"
@@ -24,6 +24,9 @@ public:
 
 	// Parses data from trajectory text files to generate maps above
 	void ParseData(FString&);
+
+	// Initializes planes from maps
+	void InitPlaneActors();
 
 protected:
 	// Called when the game starts

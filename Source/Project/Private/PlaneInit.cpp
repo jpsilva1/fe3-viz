@@ -1,6 +1,3 @@
-// Copyright 2020-2021 CesiumGS, Inc. and Contributors
-
-
 #include "PlaneInit.h"
 
 // Sets default values for this component's properties
@@ -37,7 +34,7 @@ void UPlaneInit::ParseData(FString &input) {
 		}
 		else {
 			// add to mapping of coordinates
-			// line should have format time, plane number, lat, lon, alt
+			// line should have format "time, plane number, lat, lon, alt"
 			float seconds = FCString::Atof(*words[0]);
 			int32_t planeNum = FCString::Atoi(*words[1]);
 			float lat = FCString::Atof(*words[2]);
@@ -51,6 +48,18 @@ void UPlaneInit::ParseData(FString &input) {
 			coord[3].Add(alt);
 		}
 
+	}
+}
+
+void UPlaneInit::InitPlaneActors() {
+	for (auto& currPlane : planes) {
+		int32_t planeNum = currPlane.Key;
+		TArray<TArray<float>> coord = coordinates[planeNum];
+		//FVector loc(coord[1][0], coord[2][0], coord[3][0]);
+		FVector loc = FVector(-810.0f, 90.0f, -60.0f);
+		FRotator rot = FRotator(0.0f, 0.0f, 0.0f);
+		FActorSpawnParameters spawnInfo;
+		AActor* spawnedPlane = GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
 	}
 }
 
@@ -75,6 +84,8 @@ void UPlaneInit::BeginPlay()
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 	}
+
+	InitPlaneActors();
 	
 }
 
