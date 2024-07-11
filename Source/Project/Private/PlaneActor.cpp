@@ -1,6 +1,3 @@
-// Copyright 2020-2021 CesiumGS, Inc. and Contributors
-
-
 #include "PlaneActor.h"
 
 // Sets default values
@@ -12,16 +9,14 @@ APlaneActor::APlaneActor()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = Root;
 
-	// FString file = FPaths::ProjectContentDir();
-	// file.Append(TEXT("Models/Plane/plane.plane"));
-	// UE_LOG(LogTemp, Warning, TEXT("Loading plane mesh"));
-
-	//PlaneMesh = CreateDefaultSubobject<UStaticMesh>(TEXT("PlaneMesh"));
 	PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Plane/plane.plane")); 
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetStaticMesh(PlaneMesh);
 	Mesh->SetupAttachment(Root);
+
+	// need to add CesiumGlobeAnchorComponent
+
 
 }
 
