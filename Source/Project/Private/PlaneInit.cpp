@@ -11,7 +11,7 @@ UPlaneInit::UPlaneInit()
 
 void UPlaneInit::ParseData(FString &input) {
 	// start from second line to create mapping of plane number to plane id
-	// loop through the rest of the lines which are time in seconds, plane number, lat, lon, alt 
+	// loop through the rest of the lines which are time in seconds, plane number, x, y, z, attitude
 
 	TArray<FString> lines;
 	input.ParseIntoArray(lines, TEXT("\n"), false);
@@ -62,15 +62,16 @@ void UPlaneInit::ParseData(FString &input) {
 	}
 }
 
+// Initiliaze plane actors based on first coordinates and attitude
 void UPlaneInit::InitPlaneActors() {
 	for (auto& currPlane : planes) {
 		int32_t planeNum = currPlane.Key;
 		TArray<TArray<float>> coord = coordinates[planeNum];
-		//FVector loc(coord[1][0], coord[2][0], coord[3][0]);
-		FVector loc = FVector(-810.0f, 90.0f, -60.0f);
-		FRotator rot = FRotator(0.0f, 0.0f, 0.0f);
+		FVector loc = FVector(coord[1][0], coord[2][0], coord[3][0]);
+		FRotator rot = FRotator(coord[5][0], coord[6][0], coord[4][0]); // constructor is pitch, yaw, roll
 		FActorSpawnParameters spawnInfo;
-		AActor* spawnedPlane = GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
+		APlaneActor* spawnedPlane = (APlaneActor*) GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
+		planeActors.Add(planeNum, spawnedPlane);
 	}
 }
 
@@ -100,12 +101,38 @@ void UPlaneInit::BeginPlay()
 	
 }
 
+// Change plane positions and rotations based on counter which is updated in TickComponent
+void UPlaneInit::updatePlanePositions() {
+	for (auto& curr : planeActors) {
+		std::int32_t planeNum = curr.Key;
+		APlaneActor* actor = curr.Value;
+		TArray<TArray<float>>& coord = coordinates[planeNum];
+
+		int32_t countInt = counter / updateNum;
+
+		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
+		FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
+
+		actor->SetActorLocation(loc);
+		actor->SetActorRotation(rot);
+	}
+}
+
 
 // Called every frame
 void UPlaneInit::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (play) {
+		counter += 1;
+		if (counter % updateNum == 0) {
+			updatePlanePositions();
+		}
+	}
+
+	if (counter >= 520) { // loop
+		counter = 1;
+	}
 }
 
