@@ -23,6 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void setMesh(FString input);
+
 	UPROPERTY()
 	USceneComponent* Root;
 	

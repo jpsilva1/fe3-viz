@@ -43,12 +43,17 @@ public:
 	// How many frames between each update
 	int32_t updateNum = 1;
 
-
+	// Planes move when true
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool play = false;
 
+	// To be controlled by blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void setPlay(bool cond);
+
+	// Change which mesh based on blueprint
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void changeMesh(const FString& input);
 
 
 protected:

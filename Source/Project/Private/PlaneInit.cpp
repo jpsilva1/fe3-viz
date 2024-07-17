@@ -124,16 +124,18 @@ void APlaneInit::setPlay_Implementation(bool cond) {
 	play = cond;
 }
 
+void APlaneInit::changeMesh_Implementation(const FString& input) {
+	for (auto& curr : planeActors) {
+		APlaneActor* actor = curr.Value;
+		actor->setMesh(input);
+	}
+}
+
 
 // Called every frame
 void APlaneInit::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/*
-	for (TFieldIterator<UProperty> PropIt(GetWorld()->GetClass(), EFieldIteratorFlags::IncludeSuper); PropIt; ++PropIt) {
-		UProperty* property = *PropIt;
-		UE_LOG(LogTemp, Warning, TEXT("Property: %s"), *property->GetName());
-	} */
 
 	if (play) {
 		counter += 1;
