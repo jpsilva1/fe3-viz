@@ -1,15 +1,16 @@
 #include "PlaneInit.h"
+#include <UObject/UnrealTypePrivate.h>
 
 // Sets default values for this component's properties
-UPlaneInit::UPlaneInit()
+APlaneInit::APlaneInit()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-void UPlaneInit::ParseData(FString &input) {
+void APlaneInit::ParseData(FString &input) {
 	// start from second line to create mapping of plane number to plane id
 	// loop through the rest of the lines which are time in seconds, plane number, x, y, z, attitude
 
@@ -63,7 +64,7 @@ void UPlaneInit::ParseData(FString &input) {
 }
 
 // Initiliaze plane actors based on first coordinates and attitude
-void UPlaneInit::InitPlaneActors() {
+void APlaneInit::InitPlaneActors() {
 	for (auto& currPlane : planes) {
 		int32_t planeNum = currPlane.Key;
 		TArray<TArray<float>> coord = coordinates[planeNum];
@@ -76,7 +77,7 @@ void UPlaneInit::InitPlaneActors() {
 }
 
 // Called when the game starts
-void UPlaneInit::BeginPlay()
+void APlaneInit::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -99,10 +100,11 @@ void UPlaneInit::BeginPlay()
 
 	InitPlaneActors();
 	
+	
 }
 
 // Change plane positions and rotations based on counter which is updated in TickComponent
-void UPlaneInit::updatePlanePositions() {
+void APlaneInit::updatePlanePositions() {
 	for (auto& curr : planeActors) {
 		std::int32_t planeNum = curr.Key;
 		APlaneActor* actor = curr.Value;
@@ -118,11 +120,20 @@ void UPlaneInit::updatePlanePositions() {
 	}
 }
 
+void APlaneInit::setPlay_Implementation(bool cond) {
+	play = cond;
+}
+
 
 // Called every frame
-void UPlaneInit::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void APlaneInit::Tick(float DeltaTime)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::Tick(DeltaTime);
+	/*
+	for (TFieldIterator<UProperty> PropIt(GetWorld()->GetClass(), EFieldIteratorFlags::IncludeSuper); PropIt; ++PropIt) {
+		UProperty* property = *PropIt;
+		UE_LOG(LogTemp, Warning, TEXT("Property: %s"), *property->GetName());
+	} */
 
 	if (play) {
 		counter += 1;

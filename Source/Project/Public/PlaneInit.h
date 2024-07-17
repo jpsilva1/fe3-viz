@@ -3,18 +3,19 @@
 
 #include "PlaneActor.h"
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 #include "PlaneInit.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECT_API UPlaneInit : public UActorComponent
+UCLASS()
+class PROJECT_API APlaneInit : public AActor
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UPlaneInit();
+	APlaneInit();
 
 	// Map of plane number to plane id
 	TMap<std::int32_t, FString> planes;
@@ -42,8 +43,13 @@ public:
 	// How many frames between each update
 	int32_t updateNum = 1;
 
-	// Updates position if true
-	bool play;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool play = false;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void setPlay(bool cond);
+
 
 protected:
 	// Called when the game starts
@@ -51,6 +57,6 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Tick(float DeltaTime) override;
 		
 };
