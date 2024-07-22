@@ -46,8 +46,8 @@ void APlaneInit::ParseData(FString &input) {
 			float z = FCString::Atof(*words[4]);
 
 			FString attitude = words[5];
-			float roll = FCString::Atof(*(attitude.Mid(0, 2)));
-			float pitch = FCString::Atof(*(attitude.Mid(2, 2)));
+			float roll = (FCString::Atof(*(attitude.Mid(0, 2))) * 2) - 90.0f;
+			float pitch = (FCString::Atof(*(attitude.Mid(2, 2))) * 2) - 90.0f;
 			float yaw = FCString::Atof(*(attitude.Mid(4, 2)));
 
 			TArray<TArray<float>> &coord = coordinates[planeNum];
@@ -76,6 +76,73 @@ void APlaneInit::InitPlaneActors() {
 	}
 }
 
+
+// Change trajectory vectors so each one starts with 0.5 and ends with 275
+void APlaneInit::FillData() {
+	for (auto& curr : planes) {
+		TArray<TArray<float>>& coord = coordinates[curr.Key];
+		float startTime = coord[0][0];
+		float endTime = coord[0][519];
+		if (startTime > 0.5) {
+			float x = coord[1][0];
+			float y = coord[2][0];
+			float z = coord[3][0];
+			float roll = coord[4][0];
+			float pitch = coord[5][0];
+			float yaw = coord[6][0];
+			for (float i = startTime - 0.5f; i > 0.5f; i = i - 0.5f) {
+				coord[0].Insert(i, 0);
+				coord[1].Insert(x, 0);
+				coord[2].Insert(y, 0);
+				coord[3].Insert(z, 0);
+				coord[4].Insert(roll, 0);
+				coord[5].Insert(pitch, 0);
+				coord[6].Insert(yaw, 0);
+			}
+		}
+
+		if (endTime < 275.0f) {
+			float x = coord[1][519];
+			float y = coord[2][519];
+			float z = coord[3][519];
+			float roll = coord[4][519];
+			float pitch = coord[5][519];
+			float yaw = coord[6][519];
+			for (float i = endTime + 0.5f; i < 275.0f; i = i + 0.5f) {
+				int currLen = coord[0].Num();
+				coord[0].Insert(i, currLen);
+				coord[1].Insert(x, currLen);
+				coord[2].Insert(y, currLen);
+				coord[3].Insert(z, currLen);
+				coord[4].Insert(roll, currLen);
+				coord[5].Insert(pitch, currLen);
+				coord[6].Insert(yaw, currLen);
+			}
+		}
+	}
+
+}
+
+void APlaneInit::PrintData() {
+	// just print the first one
+	TArray<TArray<float>>& coord = coordinates[0];
+
+	for (int i = 0; i < coord[0].Num(); i++) {
+		float seconds = coord[0][i];
+		float x = coord[1][i];
+		float y = coord[2][i];
+		float z = coord[3][i];
+		float roll = coord[4][i];
+		float pitch = coord[5][i];
+		float yaw = coord[6][i];
+
+		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
+	}
+
+	
+
+}
+
 // Called when the game starts
 void APlaneInit::BeginPlay()
 {
@@ -89,6 +156,7 @@ void APlaneInit::BeginPlay()
 	if (FileManager.FileExists(*file)) {
 		if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
 			ParseData(FileContent);
+			FillData();
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
@@ -110,7 +178,7 @@ void APlaneInit::updatePlanePositions() {
 		APlaneActor* actor = curr.Value;
 		TArray<TArray<float>>& coord = coordinates[planeNum];
 
-		int32_t countInt = counter / updateNum;
+		int32_t countInt = counter;
 
 		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
 		FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
@@ -118,6 +186,14 @@ void APlaneInit::updatePlanePositions() {
 		actor->SetActorLocation(loc);
 		actor->SetActorRotation(rot);
 	}
+}
+
+float APlaneInit::getCounter_Implementation() {
+	return counter;
+}
+
+void APlaneInit::setCounter_Implementation(float num) {
+	counter = num;
 }
 
 void APlaneInit::setPlay_Implementation(bool cond) {
@@ -139,13 +215,15 @@ void APlaneInit::Tick(float DeltaTime)
 
 	if (play) {
 		counter += 1;
-		if (counter % updateNum == 0) {
-			updatePlanePositions();
-		}
+		
 	}
 
-	if (counter >= 520) { // loop
+	if (counter > 548) { // loop
 		counter = 1;
 	}
+
+	updatePlanePositions();
+
+	
 }
 

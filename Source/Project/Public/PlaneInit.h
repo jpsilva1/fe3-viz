@@ -26,6 +26,12 @@ public:
 	// Parses data from trajectory text files to generate maps above
 	void ParseData(FString&);
 
+	// Adds coordinates at start and end of each plane's trajectory vector to align timing
+	void FillData();
+
+	// For debugging
+	void PrintData();
+
 	// Initializes planes from maps
 	void InitPlaneActors();
 
@@ -38,10 +44,14 @@ public:
 	void updatePlanePositions();
 
 	// Keep track of index of which coordinates to use
-	int32_t counter = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float counter = 1;
 
-	// How many frames between each update
-	int32_t updateNum = 1;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	float getCounter();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void setCounter(float num);
 
 	// Planes move when true
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
