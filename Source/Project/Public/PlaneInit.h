@@ -2,6 +2,7 @@
 #pragma once
 
 #include "PlaneActor.h"
+#include "TextParser.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
@@ -13,24 +14,12 @@ class PROJECT_API APlaneInit : public AActor
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	APlaneInit();
-
+private:
 	// Map of plane number to plane id
 	TMap<std::int32_t, FString> planes;
 
 	// Map of plane number to trajectory (vector of vectors containing time, x, y, z)
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
-
-	// Parses data from trajectory text files to generate maps above
-	void ParseData(FString&);
-
-	// Adds coordinates at start and end of each plane's trajectory vector to align timing
-	void FillData();
-
-	// For debugging
-	void PrintData();
 
 	// Initializes planes from maps
 	void InitPlaneActors();
@@ -43,6 +32,10 @@ public:
 	// Method called in TickComponent to update position of planeActors
 	void updatePlanePositions();
 
+public:	
+	// Sets default values for this component's properties
+	APlaneInit();
+
 	// To initialize dropdown to choose plane
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int numPlanes;
@@ -50,6 +43,10 @@ public:
 	// Keep track of index of which coordinates to use
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float counter = 1;
+
+	// To initialize slider
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int maxCount;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	float getCounter();
