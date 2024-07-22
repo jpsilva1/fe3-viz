@@ -43,6 +43,10 @@ public:
 	// Method called in TickComponent to update position of planeActors
 	void updatePlanePositions();
 
+	// To initialize dropdown to choose plane
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int numPlanes;
+
 	// Keep track of index of which coordinates to use
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float counter = 1;
@@ -64,6 +68,10 @@ public:
 	// Change which mesh based on blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void changeMesh(const FString& input);
+
+	// To get pointer to plane based on plane number
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	APlaneActor* getPlane(int index);
 
 
 protected:

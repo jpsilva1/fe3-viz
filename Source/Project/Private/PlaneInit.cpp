@@ -167,6 +167,7 @@ void APlaneInit::BeginPlay()
 	}
 
 	InitPlaneActors();
+	numPlanes = planeActors.Num();
 	
 	
 }
@@ -205,6 +206,10 @@ void APlaneInit::changeMesh_Implementation(const FString& input) {
 		APlaneActor* actor = curr.Value;
 		actor->setMesh(input);
 	}
+}
+
+APlaneActor* APlaneInit::getPlane_Implementation(int index) {
+	return planeActors[index];
 }
 
 
