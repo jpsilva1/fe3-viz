@@ -3,6 +3,7 @@
 
 #include "PlaneActor.h"
 #include "TextParser.h"
+#include "DataframeParser.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
@@ -15,9 +16,6 @@ class PROJECT_API APlaneInit : public AActor
 	GENERATED_BODY()
 
 private:
-	// Map of plane number to plane id
-	TMap<std::int32_t, FString> planes;
-
 	// Map of plane number to trajectory (vector of vectors containing time, x, y, z)
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
 
@@ -26,7 +24,7 @@ private:
 
 	// Save planeActors in here once they are spawned
 	// Can use this to update trajectories
-	// Map of plane number to point of plane actor 
+	// Map of plane id to point of plane actor 
 	TMap<std::int32_t, APlaneActor*> planeActors;
 
 	// Method called in TickComponent to update position of planeActors
@@ -47,6 +45,10 @@ public:
 	// To initialize slider
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int maxCount;
+
+	// Whether the data has rotation
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool rotationGiven;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	float getCounter();

@@ -13,11 +13,13 @@ APlaneInit::APlaneInit()
 
 // Initiliaze plane actors based on first coordinates and attitude
 void APlaneInit::InitPlaneActors() {
-	for (auto& currPlane : planes) {
+	for (auto& currPlane : coordinates) {
 		int32_t planeNum = currPlane.Key;
 		TArray<TArray<float>> coord = coordinates[planeNum];
 		FVector loc = FVector(coord[1][0], coord[2][0], coord[3][0]);
-		FRotator rot = FRotator(coord[5][0], coord[6][0], coord[4][0]); // constructor is pitch, yaw, roll
+		FRotator rot;
+		if (rotationGiven) rot = FRotator(coord[5][0], coord[6][0], coord[4][0]); // constructor is pitch, yaw, roll
+		else rot = FRotator(0.0f, 0.0f, 0.0f);
 		FActorSpawnParameters spawnInfo;
 		APlaneActor* spawnedPlane = (APlaneActor*) GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
 		planeActors.Add(planeNum, spawnedPlane);
@@ -32,18 +34,16 @@ void APlaneInit::BeginPlay()
 	Super::BeginPlay();
 
 	FString file = FPaths::ProjectContentDir();
-	file.Append(TEXT("Data/trajectory.txt"));
+	file.Append(TEXT("Data/trajectory.csv"));
 	IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();
 
 	FString FileContent;
 	if (FileManager.FileExists(*file)) {
 		if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
-			TextParser parser;
+			DataframeParser parser;
 			parser.ParseData(FileContent);
-			planes = parser.getPlanes();
 			coordinates = parser.getCoordinates();
-			// ParseData(FileContent);
-			// FillData();
+			rotationGiven = false;
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
@@ -69,7 +69,9 @@ void APlaneInit::updatePlanePositions() {
 		int32_t countInt = counter;
 
 		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
-		FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
+		FRotator rot;
+		if (rotationGiven) rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
+		else rot = FRotator(0.0f, 0.0f, 0.0f);
 
 		actor->SetActorLocation(loc);
 		actor->SetActorRotation(rot);

@@ -16,9 +16,6 @@ public:
 	// Parses data from trajectory text files to generate maps above
 	void ParseData(FString&);
 
-	// Adds coordinates at start and end of each plane's trajectory vector to align timing
-	void FillData();
-
 	// For debugging
 	void PrintData();
 
@@ -35,5 +32,8 @@ private:
 
 	// Map of plane number to trajectory (vector of vectors containing time, x, y, z)
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
+
+	// Adds coordinates at start and end of each plane's trajectory vector to align timing
+	void FillData(float start, float end, float stepSize);
 
 };

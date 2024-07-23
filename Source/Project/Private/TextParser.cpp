@@ -68,24 +68,26 @@ void TextParser::ParseData(FString& input) {
 		}
 
 	}
-	FillData();
+	int lastNum = coordinates.Num() - 1;
+	TArray<TArray<float>> lastCoord = coordinates[lastNum];
+	FillData(coordinates[0][0][0], lastCoord[lastCoord.Num() - 1][0], 0.5f);
 }
 
 
-// Change trajectory vectors so each one starts with 0.5 and ends with 275
-void TextParser::FillData() {
-	for (auto& curr : planes) {
+// Change trajectory vectors so each one starts and ends with same number
+void TextParser::FillData(float start, float end, float stepSize) {
+	for (auto& curr : coordinates) {
 		TArray<TArray<float>>& coord = coordinates[curr.Key];
 		float startTime = coord[0][0];
-		float endTime = coord[0][519];
-		if (startTime > 0.5) {
+		float endTime = coord[0][coord[0].Num() - 1];
+		if (startTime > start) {
 			float x = coord[1][0];
 			float y = coord[2][0];
 			float z = coord[3][0];
 			float roll = coord[4][0];
 			float pitch = coord[5][0];
 			float yaw = coord[6][0];
-			for (float i = startTime - 0.5f; i > 0.5f; i = i - 0.5f) {
+			for (float i = startTime - stepSize; i >= start; i = i - stepSize) {
 				coord[0].Insert(i, 0);
 				coord[1].Insert(x, 0);
 				coord[2].Insert(y, 0);
@@ -96,14 +98,15 @@ void TextParser::FillData() {
 			}
 		}
 
-		if (endTime < 275.0f) {
-			float x = coord[1][519];
-			float y = coord[2][519];
-			float z = coord[3][519];
-			float roll = coord[4][519];
-			float pitch = coord[5][519];
-			float yaw = coord[6][519];
-			for (float i = endTime + 0.5f; i < 275.0f; i = i + 0.5f) {
+		if (endTime < end) {
+			int num = coord[0].Num() - 1;
+			float x = coord[1][num];
+			float y = coord[2][num];
+			float z = coord[3][num];
+			float roll = coord[4][num];
+			float pitch = coord[5][num];
+			float yaw = coord[6][num];
+			for (float i = endTime + stepSize; i <= end; i = i + stepSize) {
 				int currLen = coord[0].Num();
 				coord[0].Insert(i, currLen);
 				coord[1].Insert(x, currLen);
@@ -119,7 +122,6 @@ void TextParser::FillData() {
 }
 
 void TextParser::PrintData() {
-	// just print the first one
 	TArray<TArray<float>>& coord = coordinates[0];
 
 	for (int i = 0; i < coord[0].Num(); i++) {
@@ -130,6 +132,20 @@ void TextParser::PrintData() {
 		float roll = coord[4][i];
 		float pitch = coord[5][i];
 		float yaw = coord[6][i];
+
+		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
+	}
+
+	TArray<TArray<float>>& lastCoord = coordinates[3];
+
+	for (int i = 0; i < lastCoord[0].Num(); i++) {
+		float seconds = lastCoord[0][i];
+		float x = lastCoord[1][i];
+		float y = lastCoord[2][i];
+		float z = lastCoord[3][i];
+		float roll = lastCoord[4][i];
+		float pitch = lastCoord[5][i];
+		float yaw = lastCoord[6][i];
 
 		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
 	}
