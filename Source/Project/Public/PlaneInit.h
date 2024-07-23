@@ -30,6 +30,9 @@ private:
 	// Method called in TickComponent to update position of planeActors
 	void updatePlanePositions();
 
+	// If rotation not given, create one
+	FRotator createRotation(FVector start, FVector end);
+
 public:	
 	// Sets default values for this component's properties
 	APlaneInit();
@@ -50,15 +53,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool rotationGiven;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	float getCounter();
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void setCounter(float num);
-
 	// Planes move when true
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool play = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool cartesian;
+
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 	// To be controlled by blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -72,13 +81,10 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	APlaneActor* getPlane(int index);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	float getCounter();
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void setCounter(float num);
 		
 };

@@ -65,29 +65,32 @@ void TextParser::ParseData(FString& input) {
 			coord[4].Add(roll);
 			coord[5].Add(pitch);
 			coord[6].Add(yaw);
+
+			if (seconds < minSeconds) minSeconds = seconds;
+			if (seconds > maxSeconds) maxSeconds = seconds;
 		}
 
 	}
 	int lastNum = coordinates.Num() - 1;
 	TArray<TArray<float>> lastCoord = coordinates[lastNum];
-	FillData(coordinates[0][0][0], lastCoord[lastCoord.Num() - 1][0], 0.5f);
+	FillData( 0.5f);
 }
 
 
 // Change trajectory vectors so each one starts and ends with same number
-void TextParser::FillData(float start, float end, float stepSize) {
+void TextParser::FillData(float stepSize) {
 	for (auto& curr : coordinates) {
 		TArray<TArray<float>>& coord = coordinates[curr.Key];
 		float startTime = coord[0][0];
 		float endTime = coord[0][coord[0].Num() - 1];
-		if (startTime > start) {
+		if (startTime > minSeconds) {
 			float x = coord[1][0];
 			float y = coord[2][0];
 			float z = coord[3][0];
 			float roll = coord[4][0];
 			float pitch = coord[5][0];
 			float yaw = coord[6][0];
-			for (float i = startTime - stepSize; i >= start; i = i - stepSize) {
+			for (float i = startTime - stepSize; i >= minSeconds; i = i - stepSize) {
 				coord[0].Insert(i, 0);
 				coord[1].Insert(x, 0);
 				coord[2].Insert(y, 0);
@@ -98,7 +101,7 @@ void TextParser::FillData(float start, float end, float stepSize) {
 			}
 		}
 
-		if (endTime < end) {
+		if (endTime < maxSeconds) {
 			int num = coord[0].Num() - 1;
 			float x = coord[1][num];
 			float y = coord[2][num];
@@ -106,7 +109,7 @@ void TextParser::FillData(float start, float end, float stepSize) {
 			float roll = coord[4][num];
 			float pitch = coord[5][num];
 			float yaw = coord[6][num];
-			for (float i = endTime + stepSize; i <= end; i = i + stepSize) {
+			for (float i = endTime + stepSize; i <= maxSeconds; i = i + stepSize) {
 				int currLen = coord[0].Num();
 				coord[0].Insert(i, currLen);
 				coord[1].Insert(x, currLen);

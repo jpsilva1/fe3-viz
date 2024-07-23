@@ -34,6 +34,10 @@ private:
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
 
 	// Adds coordinates at start and end of each plane's trajectory vector to align timing
-	void FillData(float start, float end, float stepSize);
+	void FillData(float stepSize);
+
+	// For fill data function
+	int minSeconds = 1000000;
+	int maxSeconds = -1;
 
 };

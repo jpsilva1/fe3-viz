@@ -15,7 +15,7 @@ public:
 	~DataframeParser();
 
 	// Parses data from trajectory text files to generate maps above
-	void ParseData(FString&);
+	void ParseData(FString&, bool cartesian);
 
 	// For debugging
 	void PrintData();
@@ -35,5 +35,12 @@ private:
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
 
 	// Adds coordinates at start and end of each plane's trajectory vector to align timing
-	void FillData(float start, float end, float stepSize);
+	void FillData(float stepSize);
+
+	// Convert from lat/lon/alt to cartesian
+	TArray<float> toCartesian(float lat, float lon, float alt);
+
+	// For fill data function
+	int minSeconds = 1000000;
+	int maxSeconds = -1;
 };

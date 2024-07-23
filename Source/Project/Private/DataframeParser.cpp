@@ -8,7 +8,17 @@ DataframeParser::~DataframeParser()
 {
 }
 
-void DataframeParser::ParseData(FString& input) {
+TArray<float> DataframeParser::toCartesian(float lat, float lon, float alt) {
+	float radius = 6371 + alt; // radius of earth added to elevation
+	float x = radius * FMath::Cos(lat) * FMath::Cos(lon);
+	float y = radius * FMath::Cos(lat) * FMath::Sin(lon);
+	float z = radius * FMath::Sin(lat);
+	TArray<float> result = { x, y, z };
+	return result;
+
+}
+
+void DataframeParser::ParseData(FString& input, bool cartesian) {
 	TArray<TArray<float>> parsedCSV;
 
 	const TCHAR* Terminators[] = { L"\r", L"\n" }; 
@@ -20,61 +30,66 @@ void DataframeParser::ParseData(FString& input) {
 	TArray<FString> floatArr;
 
 	//REMEMBER TO CHANGE BACK TO CSVLines.Num()
-	for (int i = 1; i < 100; i++) { // make sure to skip first line of headers
+	for (int i = 1; i < 1000; i++) { // make sure to skip first line of headers
 		floatArr.Empty();
 		CSVLines[i].ParseIntoArray(floatArr, CSVDelimeters, 1);
 
 		if (floatArr[7] == "1") { // remove non-active planes
-			if (planes.Contains(floatArr[1])) {
-				// Add onto current trajectory of plane
-				int currPlane = planes[floatArr[1]];
-				TArray<TArray<float>>& coord = coordinates[currPlane];
-
-
-				coord[0].Add(FCString::Atof(*floatArr[0]));
-				coord[1].Add(FCString::Atof(*floatArr[3]));
-				coord[2].Add(FCString::Atof(*floatArr[4]));
-				coord[3].Add(FCString::Atof(*floatArr[5]));
-			}
-			else {
-				// Init arrays into mapping
+			if (!planes.Contains(floatArr[1])) {
+				// init vectors into map
 				TArray<float> seconds;
 				TArray<float> lat;
 				TArray<float> lon;
 				TArray<float> alt;
 				TArray<TArray<float>> coord = { seconds, lat, lon, alt };
 
-				seconds.Add(FCString::Atof(*floatArr[0]));
-				lat.Add(FCString::Atof(*floatArr[3]));
-				lon.Add(FCString::Atof(*floatArr[4]));
-				alt.Add(FCString::Atof(*floatArr[5]));
-
 				coordinates.Add(numPlanes, coord);
 				planes.Add(floatArr[1], numPlanes);
 				numPlanes++;
 			}
+
+			// Add onto current trajectory of plane
+			int currPlane = planes[floatArr[1]];
+			TArray<TArray<float>>& coord = coordinates[currPlane];
+
+			float seconds = FCString::Atof(*floatArr[0]);
+			if (seconds < minSeconds) minSeconds = seconds;
+			if (seconds > maxSeconds) maxSeconds = seconds;
+			float x = FCString::Atof(*floatArr[3]);
+			float y = FCString::Atof(*floatArr[4]);
+			float z = FCString::Atof(*floatArr[5]);
+
+			if (!cartesian) {
+				TArray<float> result = toCartesian(x, y, z);
+				x = result[0];
+				y = result[1];
+				z = result[2];
+			}
+
+			coord[0].Add(seconds);
+			coord[1].Add(x);
+			coord[2].Add(y);
+			coord[3].Add(z);
 		}
 		
 	}
-	PrintData();
 	int lastNum = coordinates.Num() - 1;
 	TArray<TArray<float>> lastCoord = coordinates[lastNum];
-	UE_LOG(LogTemp, Warning, TEXT("First: %f, Last: %f"), coordinates[0][0][0], lastCoord[lastCoord.Num() - 1][0]);
-	FillData(coordinates[0][0][0], lastCoord[lastCoord.Num() - 1][0], 1.0f);
+	FillData(1.0f);
 
-	PrintData();
+	// PrintData();
 }
 
-void DataframeParser::FillData(float start, float end, float stepSize) {
+void DataframeParser::FillData(float stepSize) {
 	for (auto& curr : coordinates) {
 		TArray<TArray<float>>& coord = coordinates[curr.Key];
 		float startTime = coord[0][0];
 		float endTime = coord[0][coord[0].Num() - 1];
-		if (startTime > start) {
+		if (startTime > minSeconds) {
 			float x = coord[1][0];
 			float y = coord[2][0];
 			float z = coord[3][0];
-			for (float i = startTime - stepSize; i >= start; i = i - stepSize) {
+			for (float i = startTime - stepSize; i >= minSeconds; i = i - stepSize) {
 				coord[0].Insert(i, 0);
 				coord[1].Insert(x, 0);
 				coord[2].Insert(y, 0);
@@ -82,12 +97,12 @@ void DataframeParser::FillData(float start, float end, float stepSize) {
 			}
 		}
 
-		if (endTime < end) {
+		if (endTime < maxSeconds) {
 			int num = coord[0].Num() - 1;
 			float x = coord[1][num];
 			float y = coord[2][num];
 			float z = coord[3][num];
-			for (float i = endTime + stepSize; i <= end; i = i + stepSize) {
+			for (float i = endTime + stepSize; i <= maxSeconds; i = i + stepSize) {
 				int currLen = coord[0].Num();
 				coord[0].Insert(i, currLen);
 				coord[1].Insert(x, currLen);

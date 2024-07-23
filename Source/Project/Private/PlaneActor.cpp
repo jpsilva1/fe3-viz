@@ -15,7 +15,6 @@ APlaneActor::APlaneActor()
 	Mesh->SetStaticMesh(PlaneMesh);
 	Mesh->SetupAttachment(Root);
 
-	// need to add CesiumGlobeAnchorComponent
 }
 
 void APlaneActor::setMesh(FString input) {
