@@ -20,7 +20,7 @@ void APlaneInit::InitPlaneActors() {
 		FRotator rot;
 		if (rotationGiven) rot = FRotator(coord[5][0], coord[6][0], coord[4][0]); // constructor is pitch, yaw, roll
 		else {
-			int size = coord.Num() - 1;
+			int size = coord[0].Num() - 1;
 			FVector end = FVector(coord[1][size], coord[2][size], coord[3][size]);
 			rot = createRotation(loc, end);
 		}
@@ -86,16 +86,9 @@ void APlaneInit::updatePlanePositions() {
 
 FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	// set rotation to be between first point and last point
-	// input is array where first 3 entries are start, last 3 entries are end
 
-	UE_LOG(LogTemp, Warning, TEXT("start x: %f, y: %f, z:%f"), start.X, start.Y, start.Z);
-	UE_LOG(LogTemp, Warning, TEXT("end x: %f, y: %f, z:%f"), end.X, end.Y, end.Z);
-	FVector result = end - start;
-	UE_LOG(LogTemp, Warning, TEXT("sub x: %f, y: %f, z:%f"), result.X, result.Y, result.Z);
-	result.Normalize();
-	FRotator rot = FRotator(result.Y, result.Z, result.X);
-	UE_LOG(LogTemp, Warning, TEXT("final x: %f, y: %f, z:%f"), result.X, result.Y, result.Z);
-	return rot;
+	FRotator result = UKismetMathLibrary::FindLookAtRotation(end, start);
+	return result;
 
 }
 

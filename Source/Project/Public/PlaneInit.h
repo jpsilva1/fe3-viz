@@ -4,6 +4,7 @@
 #include "PlaneActor.h"
 #include "TextParser.h"
 #include "DataframeParser.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"

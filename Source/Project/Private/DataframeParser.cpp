@@ -76,8 +76,6 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 	int lastNum = coordinates.Num() - 1;
 	TArray<TArray<float>> lastCoord = coordinates[lastNum];
 	FillData(1.0f);
-
-	// PrintData();
 }
 
 void DataframeParser::FillData(float stepSize) {
@@ -126,6 +124,7 @@ void DataframeParser::PrintData() {
 		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f"), seconds, x, y, z);
 	}
 
+	
 	TArray<TArray<float>>& coord1 = coordinates[3];
 
 	for (int i = 0; i < coord1[0].Num(); i++) {
