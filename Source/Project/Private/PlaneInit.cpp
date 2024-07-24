@@ -30,24 +30,29 @@ void APlaneInit::InitPlaneActors() {
 	}
 }
 
-
-
-// Called when the game starts
-void APlaneInit::BeginPlay()
-{
-	Super::BeginPlay();
-
+void APlaneInit::inputFile_Implementation(const FString& input) {
 	FString file = FPaths::ProjectContentDir();
-	file.Append(TEXT("Data/trajectory.csv"));
+	// file.Append(TEXT("Data/trajectory.csv"));
+	file.Append(input);
 	IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();
 
 	FString FileContent;
 	if (FileManager.FileExists(*file)) {
 		if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
-			DataframeParser parser;
-			parser.ParseData(FileContent, false);
+			//DataframeParser parser;
+			//parser.ParseData(FileContent, false);
+			//coordinates = parser.getCoordinates();
+			//rotationGiven = false;
+
+			TextParser parser;
+			parser.ParseData(FileContent);
 			coordinates = parser.getCoordinates();
-			rotationGiven = false;
+			rotationGiven = true;
+
+			InitPlaneActors();
+			numPlanes = planeActors.Num();
+			maxCount = coordinates[0][0].Num() - 1;
+			active = true;
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
@@ -57,10 +62,14 @@ void APlaneInit::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 	}
 
-	InitPlaneActors();
-	numPlanes = planeActors.Num();
-	maxCount = coordinates[0][0].Num() - 1;
 	
+}
+
+
+// Called when the game starts
+void APlaneInit::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 // Change plane positions and rotations based on counter which is updated in TickComponent
@@ -86,7 +95,6 @@ void APlaneInit::updatePlanePositions() {
 
 FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	// set rotation to be between first point and last point
-
 	FRotator result = UKismetMathLibrary::FindLookAtRotation(end, start);
 	return result;
 
@@ -111,26 +119,39 @@ void APlaneInit::changeMesh_Implementation(const FString& input) {
 	}
 }
 
+
+
 APlaneActor* APlaneInit::getPlane_Implementation(int index) {
 	return planeActors[index];
 }
 
+bool APlaneInit::getPathChanged_Implementation() {
+	return pathChanged;
+}
+
+void APlaneInit::setPathChanged_Implementation(bool input) {
+	pathChanged = input;
+}
 
 // Called every frame
 void APlaneInit::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (play) {
-		counter += 1;
-		
+	if (active) {
+		if (play) {
+			counter += 1;
+
+		}
+
+		if (counter >= maxCount) { // loop
+			counter = 1;
+		}
+
+		updatePlanePositions();
 	}
 
-	if (counter >= maxCount) { // loop
-		counter = 1;
-	}
-
-	updatePlanePositions();
+	
 
 	
 }

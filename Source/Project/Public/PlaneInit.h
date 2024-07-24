@@ -34,6 +34,9 @@ private:
 	// If rotation not given, create one
 	FRotator createRotation(FVector start, FVector end);
 
+	// Set to true once valid path used
+	bool active = false;
+
 public:	
 	// Sets default values for this component's properties
 	APlaneInit();
@@ -61,6 +64,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool cartesian;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool pathChanged = false;
+
 
 protected:
 	// Called when the game starts
@@ -69,6 +75,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// To input file path, will parse and initialize planes
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void inputFile(const FString& input);
 
 	// To be controlled by blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -87,5 +97,12 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void setCounter(float num);
+
+	// To reinit blueprints if path changes
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool getPathChanged();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void setPathChanged(bool input);
 		
 };
