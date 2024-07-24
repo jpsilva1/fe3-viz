@@ -90,13 +90,13 @@ public:
 
 	// To get pointer to plane based on plane number
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	APlaneActor* getPlane(int index);
+	APlaneActor* getPlane(const int& index);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	float getCounter();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void setCounter(float num);
+	void setCounter(const float &num);
 
 	// To reinit blueprints if path changes
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

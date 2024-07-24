@@ -76,11 +76,16 @@ void TextParser::ParseData(FString& input) {
 	FillData( 0.5f);
 }
 
+void TextParser::printError() {
+	for (auto& curr : coordinates) {
+		UE_LOG(LogTemp, Warning, TEXT("plane number: %d"), curr.Key);
+	}
+}
 
 // Change trajectory vectors so each one starts and ends with same number
 void TextParser::FillData(float stepSize) {
 	for (auto& curr : coordinates) {
-		TArray<TArray<float>>& coord = coordinates[curr.Key];
+		TArray<TArray<float>>& coord = curr.Value;
 		float startTime = coord[0][0];
 		float endTime = coord[0][coord[0].Num() - 1];
 		if (startTime > minSeconds) {
@@ -100,7 +105,7 @@ void TextParser::FillData(float stepSize) {
 				coord[6].Insert(yaw, 0);
 			}
 		}
-
+		
 		if (endTime < maxSeconds) {
 			int num = coord[0].Num() - 1;
 			float x = coord[1][num];
@@ -125,32 +130,25 @@ void TextParser::FillData(float stepSize) {
 }
 
 void TextParser::PrintData() {
-	TArray<TArray<float>>& coord = coordinates[0];
 
-	for (int i = 0; i < coord[0].Num(); i++) {
-		float seconds = coord[0][i];
-		float x = coord[1][i];
-		float y = coord[2][i];
-		float z = coord[3][i];
-		float roll = coord[4][i];
-		float pitch = coord[5][i];
-		float yaw = coord[6][i];
+	for (int j = 0; j < coordinates.Num(); j++) {
+		TArray<TArray<float>>& coord = coordinates[j];
 
-		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
+		for (int i = 0; i < coord[0].Num(); i++) {
+			float seconds = coord[0][i];
+			float x = coord[1][i];
+			float y = coord[2][i];
+			float z = coord[3][i];
+			float roll = coord[4][i];
+			float pitch = coord[5][i];
+			float yaw = coord[6][i];
+
+			UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
+		}
+
 	}
+	
 
-	TArray<TArray<float>>& lastCoord = coordinates[3];
-
-	for (int i = 0; i < lastCoord[0].Num(); i++) {
-		float seconds = lastCoord[0][i];
-		float x = lastCoord[1][i];
-		float y = lastCoord[2][i];
-		float z = lastCoord[3][i];
-		float roll = lastCoord[4][i];
-		float pitch = lastCoord[5][i];
-		float yaw = lastCoord[6][i];
-
-		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
-	}
+	
 
 }

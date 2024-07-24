@@ -31,37 +31,43 @@ void APlaneInit::InitPlaneActors() {
 }
 
 void APlaneInit::inputFile_Implementation(const FString& input) {
-	FString file = FPaths::ProjectContentDir();
-	// file.Append(TEXT("Data/trajectory.csv"));
-	file.Append(input);
-	IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();
+	if (!active) {
+		FString file = FPaths::ProjectContentDir();
+		// file.Append(TEXT("Data/trajectory.csv"));
+		file.Append(input);
+		IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();
 
-	FString FileContent;
-	if (FileManager.FileExists(*file)) {
-		if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
-			//DataframeParser parser;
-			//parser.ParseData(FileContent, false);
-			//coordinates = parser.getCoordinates();
-			//rotationGiven = false;
+		FString FileContent;
+		if (FileManager.FileExists(*file)) {
+			if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
+				if (input.Contains(".txt")) {
+					TextParser parser;
+					parser.ParseData(FileContent);
+					coordinates = parser.getCoordinates();
+					rotationGiven = true;
+				}
+				else if (input.Contains(".csv")) {
+					DataframeParser parser;
+					parser.ParseData(FileContent, false);
+					coordinates = parser.getCoordinates();
+					rotationGiven = false;
+				}
 
-			TextParser parser;
-			parser.ParseData(FileContent);
-			coordinates = parser.getCoordinates();
-			rotationGiven = true;
-
-			InitPlaneActors();
-			numPlanes = planeActors.Num();
-			maxCount = coordinates[0][0].Num() - 1;
-			active = true;
+				InitPlaneActors();
+				numPlanes = planeActors.Num();
+				maxCount = coordinates[0][0].Num() - 1;
+				active = true;
+			}
+			else {
+				UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
+			}
 		}
 		else {
-			UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
+			UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 		}
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
-	}
 
+	}
+	
 	
 }
 
@@ -104,7 +110,7 @@ float APlaneInit::getCounter_Implementation() {
 	return counter;
 }
 
-void APlaneInit::setCounter_Implementation(float num) {
+void APlaneInit::setCounter_Implementation(const float& num) {
 	counter = num;
 }
 
@@ -121,7 +127,7 @@ void APlaneInit::changeMesh_Implementation(const FString& input) {
 
 
 
-APlaneActor* APlaneInit::getPlane_Implementation(int index) {
+APlaneActor* APlaneInit::getPlane_Implementation(const int& index) {
 	return planeActors[index];
 }
 

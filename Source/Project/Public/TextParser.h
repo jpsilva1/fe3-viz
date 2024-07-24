@@ -19,6 +19,8 @@ public:
 	// For debugging
 	void PrintData();
 
+	void printError();
+
 	// Returns map of plane number to plane id
 	TMap<std::int32_t, FString> getPlanes();
 
