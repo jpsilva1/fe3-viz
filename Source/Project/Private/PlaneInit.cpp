@@ -52,7 +52,11 @@ void APlaneInit::inputFile_Implementation(const FString& input) {
 					coordinates = parser.getCoordinates();
 					rotationGiven = false;
 				}
+				else if (input.Contains("live data")) {
+					
+				}
 
+				
 				InitPlaneActors();
 				numPlanes = planeActors.Num();
 				maxCount = coordinates[0][0].Num() - 1;
