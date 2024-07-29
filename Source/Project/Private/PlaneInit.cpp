@@ -30,49 +30,62 @@ void APlaneInit::InitPlaneActors() {
 	}
 }
 
-void APlaneInit::inputFile_Implementation(const FString& input) {
+
+void APlaneInit::inputFile_Implementation() {
 	if (!active) {
-		FString file = FPaths::ProjectContentDir();
-		// file.Append(TEXT("Data/trajectory.csv"));
-		file.Append(input);
-		IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();
+		IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+		if (DesktopPlatform)
+		{
+			TArray<FString> OutFilenames;
+			bool bOpened = DesktopPlatform->OpenFileDialog
+			(
+				nullptr,
+				TEXT("Choose File"),
+				FPaths::ProjectContentDir(),
+				TEXT(""),
+				TEXT(".txt or .csv files"),
+				EFileDialogFlags::None,
+				OutFilenames
+			);
 
-		FString FileContent;
-		if (FileManager.FileExists(*file)) {
-			if (FFileHelper::LoadFileToString(FileContent, *file, FFileHelper::EHashOptions::None)) {
-				if (input.Contains(".txt")) {
-					TextParser parser;
-					parser.ParseData(FileContent);
-					coordinates = parser.getCoordinates();
-					rotationGiven = true;
-				}
-				else if (input.Contains(".csv")) {
-					DataframeParser parser;
-					parser.ParseData(FileContent, false);
-					coordinates = parser.getCoordinates();
-					rotationGiven = false;
-				}
-				else if (input.Contains("live data")) {
+			if (bOpened && OutFilenames.Num() > 0)
+			{
+				FString SelectedPath = OutFilenames[0];
+				FString FileContent;
+
+				if (FFileHelper::LoadFileToString(FileContent, *SelectedPath))
+				{
+					if (SelectedPath.Contains(".txt")) {
+						TextParser parser;
+						parser.ParseData(FileContent);
+						coordinates = parser.getCoordinates();
+						rotationGiven = true;
+					}
+					else if (SelectedPath.Contains(".csv")) {
+						DataframeParser parser;
+						parser.ParseData(FileContent, false);
+						coordinates = parser.getCoordinates();
+						rotationGiven = false;
+					}
 					
-				}
 
-				
-				InitPlaneActors();
-				numPlanes = planeActors.Num();
-				maxCount = coordinates[0][0].Num() - 1;
-				active = true;
+
+					InitPlaneActors();
+					numPlanes = planeActors.Num();
+					maxCount = coordinates[0][0].Num() - 1;
+					active = true;
+				}
+				else {
+					UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
+				}
 			}
 			else {
-				UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
+				UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 			}
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
+
 		}
 
 	}
-	
-	
 }
 
 

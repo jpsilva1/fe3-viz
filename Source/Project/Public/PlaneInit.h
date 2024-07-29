@@ -5,6 +5,8 @@
 #include "TextParser.h"
 #include "DataframeParser.h"
 #include "PythonWrapper.h"
+#include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
+#include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -79,7 +81,7 @@ public:
 
 	// To input file path, will parse and initialize planes
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void inputFile(const FString& input);
+	void inputFile();
 
 	// To be controlled by blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
