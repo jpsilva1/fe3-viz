@@ -33,6 +33,46 @@ void APlaneActor::setMesh(FString input) {
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
 	}
+	else if (input == TEXT("Hale")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Hale/hale.hale"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Reaper")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Reaper/reaper.reaper"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Global Hawk")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/GlobalHawk/hawk.hawk"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("RQ14")) { //rotation
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/RQ14/rq14.rq14"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Quadrotor")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Quadrotor/quadrotor.quadrotor"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Octocopter")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Octocopter/octocopter.octocopter"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Hexcopter")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Hexcopter/hexcopter.hexcopter"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("3DR Aero M")) { //rotation
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/3DR/3dr.3dr"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
 	else { // Airplane
 		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Plane/plane.plane"));
 		Mesh->SetStaticMesh(PlaneMesh);
