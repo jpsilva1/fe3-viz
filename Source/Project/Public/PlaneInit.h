@@ -83,6 +83,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void inputFile();
 
+	// To parse second file with vehicle information
+	// Only for .txt files from fe3
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void inputVehicleFile();
+
 	// To be controlled by blueprint
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void setPlay(bool cond);

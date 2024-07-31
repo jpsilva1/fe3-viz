@@ -67,8 +67,6 @@ void APlaneInit::inputFile_Implementation() {
 						coordinates = parser.getCoordinates();
 						rotationGiven = false;
 					}
-					
-
 
 					InitPlaneActors();
 					numPlanes = planeActors.Num();
@@ -83,6 +81,58 @@ void APlaneInit::inputFile_Implementation() {
 				UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 			}
 
+		}
+
+	}
+}
+
+void APlaneInit::inputVehicleFile_Implementation() {
+	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+	if (DesktopPlatform)
+	{
+		TArray<FString> OutFilenames;
+		bool bOpened = DesktopPlatform->OpenFileDialog
+		(
+			nullptr,
+			TEXT("Choose File"),
+			FPaths::ProjectContentDir(),
+			TEXT(""),
+			TEXT(".txt files"),
+			EFileDialogFlags::None,
+			OutFilenames
+		);
+
+		if (bOpened && OutFilenames.Num() > 0)
+		{
+			FString SelectedPath = OutFilenames[0];
+			FString FileContent;
+
+			if (FFileHelper::LoadFileToString(FileContent, *SelectedPath))
+			{
+				TArray<FString> lines;
+				FileContent.ParseIntoArray(lines, TEXT("\n"), false);
+
+				for (std::int32_t i = 1; i < lines.Num(); i++) {
+					TArray<FString> words;
+					lines[i].ParseIntoArray(words, TEXT("\t"), false);
+
+					
+					if (words.Num() > 2 && planeActors.Contains(FCString::Atoi(*words[0]))) {
+						FString vehicleType = "";
+						if (words[2].Contains("Kinetic QuadE")) {
+							vehicleType = "Quadcopter";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+						
+					}
+				}
+			}
+			else {
+				UE_LOG(LogTemp, Warning, TEXT("Failed to load text"));
+			}
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("Failed to load file"));
 		}
 
 	}
