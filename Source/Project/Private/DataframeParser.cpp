@@ -29,6 +29,8 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 
 	TArray<FString> floatArr;
 
+	//ACesiumGeoreference* georef;
+
 	//REMEMBER TO CHANGE BACK TO CSVLines.Num()
 	for (int i = 1; i < 1000; i++) { // make sure to skip first line of headers
 		floatArr.Empty();
@@ -60,10 +62,10 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 			float z = FCString::Atof(*floatArr[5]);
 
 			if (!cartesian) {
-				TArray<float> result = toCartesian(x, y, z);
-				x = result[0];
-				y = result[1];
-				z = result[2];
+				//TArray<float> result = toCartesian(x, y, z);
+				//x = result[0];
+				//y = result[1];
+				//z = result[2];
 			}
 
 			coord[0].Add(seconds);
