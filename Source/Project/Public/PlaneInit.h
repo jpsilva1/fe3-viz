@@ -5,6 +5,7 @@
 #include "TextParser.h"
 #include "DataframeParser.h"
 #include "PythonWrapper.h"
+#include "CesiumGeoreference.h"
 #include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
 #include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -65,10 +66,13 @@ public:
 	bool play = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool cartesian;
+	bool cartesian = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool pathChanged = false;
+
+	UPROPERTY(EditAnywhere)
+	ACesiumGeoreference* georef;
 
 
 protected:

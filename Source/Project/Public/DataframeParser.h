@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "Project.Build.cs"
 #include "CoreMinimal.h"
 
 /**
@@ -24,7 +23,6 @@ public:
 	// Returns map of coordinates
 	TMap<std::int32_t, TArray<TArray<float>>> getCoordinates();
 
-
 private:
 	// Map of plane id to plane number
 	TMap< FString, std::int32_t> planes;
@@ -35,7 +33,7 @@ private:
 	// Map of plane number to trajectory (vector of vectors containing time, x, y, z)
 	TMap<std::int32_t, TArray<TArray<float>>> coordinates;
 
-	// Adds coordinates at start and end of each plane's trajectory vector to align timing
+	// Adds coordinates at start and end of each plane's trajectory vector to align timings
 	void FillData(float stepSize);
 
 	// Convert from lat/lon/alt to cartesian

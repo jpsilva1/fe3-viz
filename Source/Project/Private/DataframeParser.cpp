@@ -14,6 +14,9 @@ TArray<float> DataframeParser::toCartesian(float lat, float lon, float alt) {
 	float y = radius * FMath::Cos(lat) * FMath::Sin(lon);
 	float z = radius * FMath::Sin(lat);
 	TArray<float> result = { x, y, z };
+	/*FVector original = FVector(lat, lon, alt);
+	FVector resultVec = georef->TransformLongitudeLatitudeHeightPositionToUnreal(original);
+	TArray<float> result = { (float) resultVec.X, (float)resultVec.Y, (float) resultVec.Z };*/
 	return result;
 
 }
@@ -29,7 +32,6 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 
 	TArray<FString> floatArr;
 
-	//ACesiumGeoreference* georef;
 
 	//REMEMBER TO CHANGE BACK TO CSVLines.Num()
 	for (int i = 1; i < 1000; i++) { // make sure to skip first line of headers
@@ -61,12 +63,12 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 			float y = FCString::Atof(*floatArr[4]);
 			float z = FCString::Atof(*floatArr[5]);
 
-			if (!cartesian) {
-				//TArray<float> result = toCartesian(x, y, z);
-				//x = result[0];
-				//y = result[1];
-				//z = result[2];
-			}
+			/*if (!cartesian) {
+				TArray<float> result = toCartesian(x, y, z);
+				x = result[0];
+				y = result[1];
+				z = result[2];
+			}*/
 
 			coord[0].Add(seconds);
 			coord[1].Add(x);

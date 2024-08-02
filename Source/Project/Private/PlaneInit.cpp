@@ -66,6 +66,7 @@ void APlaneInit::inputFile_Implementation() {
 						parser.ParseData(FileContent, false);
 						coordinates = parser.getCoordinates();
 						rotationGiven = false;
+						cartesian = false;
 					}
 
 					InitPlaneActors();
@@ -123,6 +124,21 @@ void APlaneInit::inputVehicleFile_Implementation() {
 							vehicleType = "Quadcopter";
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
+
+						else if (words[2].Contains("QuadEvtol")) {
+							vehicleType = "Quadcopter";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+
+						else if (words[2].Contains("QuadRotorBasic")) {
+							vehicleType = "Quadcopter";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+
+						else if (words[2].Contains("Kinetic Global Hawk")) {
+							vehicleType = "Quadcopter";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
 						
 					}
 				}
@@ -155,6 +171,7 @@ void APlaneInit::updatePlanePositions() {
 		int32_t countInt = counter;
 
 		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
+		if (!cartesian) loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(loc);
 		actor->SetActorLocation(loc);
 		
 		if (rotationGiven) {
