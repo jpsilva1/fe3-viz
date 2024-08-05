@@ -139,6 +139,26 @@ void APlaneInit::inputVehicleFile_Implementation() {
 							vehicleType = "Global Hawk";
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
+
+						else if (words[2].Contains("1_5_scale_decathlon")) {
+							vehicleType = "3DR Aero M";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+
+						else if (words[2].Contains("OctoCopter_Reflection")) {
+							vehicleType = "Octocopter";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+
+						else if (words[2].Contains("Balloon Loon")) {
+							vehicleType = "Balloon";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
+
+						else if (words[2].Contains("Stratos Balloon")) {
+							vehicleType = "Balloon";
+							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
+						}
 						
 					}
 				}

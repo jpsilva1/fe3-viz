@@ -48,7 +48,7 @@ void APlaneActor::setMesh(FString input) {
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
 	}
-	else if (input == TEXT("RQ14")) { //rotation
+	else if (input == TEXT("RQ14")) { 
 		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/RQ14/rq14.rq14"));
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
@@ -68,8 +68,13 @@ void APlaneActor::setMesh(FString input) {
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
 	}
-	else if (input == TEXT("3DR Aero M")) { //rotation
+	else if (input == TEXT("3DR Aero M")) { 
 		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/3DR/3dr.3dr"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Balloon")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Balloon/balloon.balloon"));
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
 	}
