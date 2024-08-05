@@ -136,7 +136,7 @@ void APlaneInit::inputVehicleFile_Implementation() {
 						}
 
 						else if (words[2].Contains("Kinetic Global Hawk")) {
-							vehicleType = "Quadcopter";
+							vehicleType = "Global Hawk";
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
 						
@@ -171,7 +171,9 @@ void APlaneInit::updatePlanePositions() {
 		int32_t countInt = counter;
 
 		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
-		if (!cartesian) loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(loc);
+		if (!cartesian) {
+			loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
+		}
 		actor->SetActorLocation(loc);
 		
 		if (rotationGiven) {
@@ -185,6 +187,10 @@ void APlaneInit::updatePlanePositions() {
 
 FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	// set rotation to be between first point and last point
+	/*if (!cartesian) {
+		start = georef->TransformLongitudeLatitudeHeightPositionToUnreal(start);
+		end = georef->TransformLongitudeLatitudeHeightPositionToUnreal(end);
+	}*/
 	FRotator result = UKismetMathLibrary::FindLookAtRotation(end, start);
 	return result;
 

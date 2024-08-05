@@ -34,7 +34,7 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 
 
 	//REMEMBER TO CHANGE BACK TO CSVLines.Num()
-	for (int i = 1; i < 1000; i++) { // make sure to skip first line of headers
+	for (int i = 1; i < 10000; i++) { // make sure to skip first line of headers
 		floatArr.Empty();
 		CSVLines[i].ParseIntoArray(floatArr, CSVDelimeters, 1);
 
