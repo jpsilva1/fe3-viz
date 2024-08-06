@@ -59,7 +59,7 @@ void APlaneInit::inputFile_Implementation() {
 						TextParser parser;
 						parser.ParseData(FileContent);
 						coordinates = parser.getCoordinates();
-						rotationGiven = true;
+						rotationGiven = false;
 					}
 					else if (SelectedPath.Contains(".csv")) {
 						DataframeParser parser;
@@ -197,10 +197,10 @@ void APlaneInit::updatePlanePositions() {
 		actor->SetActorLocation(loc);
 		
 		
-		if (rotationGiven) {
-			FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
-			actor->SetActorRotation(rot);
-		}
+		//if (rotationGiven) {
+		//	FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
+		//	actor->SetActorRotation(rot);
+		//}
 		
 	}
 }

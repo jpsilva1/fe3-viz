@@ -26,49 +26,51 @@ void TextParser::ParseData(FString& input) {
 	for (std::int32_t i = 1; i < lines.Num(); i++) {
 		TArray<FString> words;
 		lines[i].ParseIntoArray(words, TEXT(","), false);
+		if (words.Num() > 1) { //remove empty lines
+			if (words[1].Contains(TEXT("fid")) || words[1].Contains(TEXT("NASA"))) {
+				// add to mapping of planes
+				// line should have format "plane number, plane id, plane type"
+				planes.Add(FCString::Atoi(*words[0]), words[1]);
 
-		if (words[1].Contains(TEXT("fid"))) {
-			// add to mapping of planes
-			// line should have format "plane number, plane id, plane type"
-			planes.Add(FCString::Atoi(*words[0]), words[1]);
+				// also initialize map for coordinates
+				TArray<float> seconds;
+				TArray<float> x;
+				TArray<float> y;
+				TArray<float> z;
+				TArray<float> roll;
+				TArray<float> pitch;
+				TArray<float> yaw;
+				TArray<TArray<float>> coord = { seconds, x, y, z, roll, pitch, yaw };
+				coordinates.Add(FCString::Atoi(*words[0]), coord);
+			}
+			else {
+				// add to mapping of coordinates
+				// line should have format "time, plane number, x, y, z, attitude"
+				float seconds = FCString::Atof(*words[0]);
+				int32_t planeNum = FCString::Atoi(*words[1]);
+				float x = FCString::Atof(*words[2]);
+				float y = FCString::Atof(*words[3]);
+				float z = FCString::Atof(*words[4]);
 
-			// also initialize map for coordinates
-			TArray<float> seconds;
-			TArray<float> x;
-			TArray<float> y;
-			TArray<float> z;
-			TArray<float> roll;
-			TArray<float> pitch;
-			TArray<float> yaw;
-			TArray<TArray<float>> coord = { seconds, x, y, z, roll, pitch, yaw };
-			coordinates.Add(FCString::Atoi(*words[0]), coord);
+				FString attitude = words[5];
+				float roll = (FCString::Atof(*(attitude.Mid(0, 2))) * 2) - 90.0f;
+				float pitch = (FCString::Atof(*(attitude.Mid(2, 2))) * 2) - 90.0f;
+				float yaw = FCString::Atof(*(attitude.Mid(4, 2)));
+
+				TArray<TArray<float>>& coord = coordinates[planeNum];
+				coord[0].Add(seconds);
+				coord[1].Add(x);
+				coord[2].Add(y);
+				coord[3].Add(z);
+				coord[4].Add(roll);
+				coord[5].Add(pitch);
+				coord[6].Add(yaw);
+
+				if (seconds < minSeconds) minSeconds = seconds;
+				if (seconds > maxSeconds) maxSeconds = seconds;
+			}
 		}
-		else {
-			// add to mapping of coordinates
-			// line should have format "time, plane number, x, y, z, attitude"
-			float seconds = FCString::Atof(*words[0]);
-			int32_t planeNum = FCString::Atoi(*words[1]);
-			float x = FCString::Atof(*words[2]);
-			float y = FCString::Atof(*words[3]);
-			float z = FCString::Atof(*words[4]);
-
-			FString attitude = words[5];
-			float roll = (FCString::Atof(*(attitude.Mid(0, 2))) * 2) - 90.0f;
-			float pitch = (FCString::Atof(*(attitude.Mid(2, 2))) * 2) - 90.0f;
-			float yaw = FCString::Atof(*(attitude.Mid(4, 2)));
-
-			TArray<TArray<float>>& coord = coordinates[planeNum];
-			coord[0].Add(seconds);
-			coord[1].Add(x);
-			coord[2].Add(y);
-			coord[3].Add(z);
-			coord[4].Add(roll);
-			coord[5].Add(pitch);
-			coord[6].Add(yaw);
-
-			if (seconds < minSeconds) minSeconds = seconds;
-			if (seconds > maxSeconds) maxSeconds = seconds;
-		}
+		
 
 	}
 	int lastNum = coordinates.Num() - 1;
