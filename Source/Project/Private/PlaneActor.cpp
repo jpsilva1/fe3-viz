@@ -78,6 +78,16 @@ void APlaneActor::setMesh(FString input) {
 		Mesh->SetStaticMesh(PlaneMesh);
 		Mesh->SetupAttachment(Root);
 	}
+	else if (input == TEXT("Bell 206")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Bell/bell.bell"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
+	else if (input == TEXT("Buster Drone")) {
+		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Buster/buster.buster"));
+		Mesh->SetStaticMesh(PlaneMesh);
+		Mesh->SetupAttachment(Root);
+	}
 	else { // Airplane
 		PlaneMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Models/Plane/plane.plane"));
 		Mesh->SetStaticMesh(PlaneMesh);

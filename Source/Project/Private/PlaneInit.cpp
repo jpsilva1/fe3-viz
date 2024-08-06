@@ -150,13 +150,13 @@ void APlaneInit::inputVehicleFile_Implementation() {
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
 
-						else if (words[2].Contains("Balloon Loon")) {
+						else if (words[2].Contains("Balloon")) {
 							vehicleType = "Balloon";
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
 
-						else if (words[2].Contains("Stratos Balloon")) {
-							vehicleType = "Balloon";
+						else if (words[2].Contains("MannedAircraft")) {
+							vehicleType = "Bell 206";
 							planeActors[FCString::Atoi(*words[0])]->setMesh(vehicleType);
 						}
 						
@@ -195,6 +195,7 @@ void APlaneInit::updatePlanePositions() {
 			loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
 		}
 		actor->SetActorLocation(loc);
+		
 		
 		if (rotationGiven) {
 			FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
