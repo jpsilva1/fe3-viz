@@ -6,6 +6,7 @@
 #include "DataframeParser.h"
 #include "PythonWrapper.h"
 #include "CesiumGeoreference.h"
+#include <glm/vec3.hpp>
 #include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
 #include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -33,7 +34,7 @@ private:
 	TMap<std::int32_t, APlaneActor*> planeActors;
 
 	// Method called in TickComponent to update position of planeActors
-	void updatePlanePositions();
+	void updatePlanePositions(float DeltaTime);
 
 	// If rotation not given, create one
 	FRotator createRotation(FVector start, FVector end);
@@ -75,13 +76,15 @@ public:
 	ACesiumGeoreference* georef;
 
 
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	// virtual void Tick(float DeltaTime) override;
+	virtual void AsyncPhysicsTickActor(float DeltaTime, float SimTime) override;
 
 	// To input file path, will parse and initialize planes
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

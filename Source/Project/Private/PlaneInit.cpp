@@ -6,7 +6,8 @@ APlaneInit::APlaneInit()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true;
+	bAsyncPhysicsTickEnabled = true;
 
 }
 
@@ -182,7 +183,7 @@ void APlaneInit::BeginPlay()
 }
 
 // Change plane positions and rotations based on counter which is updated in TickComponent
-void APlaneInit::updatePlanePositions() {
+void APlaneInit::updatePlanePositions(float DeltaTime) {
 	for (auto& curr : planeActors) {
 		std::int32_t planeNum = curr.Key;
 		APlaneActor* actor = curr.Value;
@@ -191,11 +192,14 @@ void APlaneInit::updatePlanePositions() {
 		int32_t countInt = counter;
 
 		FVector loc = FVector(coord[1][countInt], coord[2][countInt], coord[3][countInt]);
-		if (!cartesian) {
+		if (cartesian) {
+			actor->SetActorLocation(loc);
+		} else {
 			loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
+			//loc = FVector(loc.X / 10, loc.Y / 10, loc.Z);
+			actor->SetActorLocation(UKismetMathLibrary::VInterpTo(actor->GetActorLocation(), loc, DeltaTime, 0.005f));
+
 		}
-		actor->SetActorLocation(loc);
-		
 		
 		//if (rotationGiven) {
 		//	FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
@@ -208,11 +212,17 @@ void APlaneInit::updatePlanePositions() {
 
 FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	// set rotation to be between first point and last point
-	/*if (!cartesian) {
-		start = georef->TransformLongitudeLatitudeHeightPositionToUnreal(start);
-		end = georef->TransformLongitudeLatitudeHeightPositionToUnreal(end);
-	}*/
-	FRotator result = UKismetMathLibrary::FindLookAtRotation(end, start);
+	FRotator result;
+	FVector up = FVector::UpVector;
+	if (!cartesian) {
+		 start = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(start.Y, start.X, start.Z * 10));
+		 end = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(end.Y, end.X, end.Z * 10));
+	}
+	result = UKismetMathLibrary::MakeRotFromXZ(start - end, up);
+	//result = UKismetMathLibrary::FindLookAtRotation(end, start);
+	UE_LOG(LogTemp, Warning, TEXT("Start: %f, %f, %f"), start.X, start.Y, start.Z);
+	UE_LOG(LogTemp, Warning, TEXT("End: %f, %f, %f"), end.X, end.Y, end.Z);
+	UE_LOG(LogTemp, Warning, TEXT("Rot: %f, %f, %f"), result.Pitch, result.Yaw, result.Roll);
 	return result;
 
 }
@@ -251,25 +261,27 @@ void APlaneInit::setPathChanged_Implementation(bool input) {
 }
 
 // Called every frame
-void APlaneInit::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+//void APlaneInit::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//
+//	if (active) {
+//		if (play) {
+//			counter += 1;
+//			if (counter >= maxCount) counter = 1;
+//			updatePlanePositions(DeltaTime);
+//		}
+//	}
+//}
+
+void APlaneInit::AsyncPhysicsTickActor(float DeltaTime, float SimTime) {
+	//Super::Tick(DeltaTime);
 
 	if (active) {
 		if (play) {
 			counter += 1;
-
+			if (counter >= maxCount) counter = 1;
+			updatePlanePositions(SimTime);
 		}
-
-		if (counter >= maxCount) { // loop
-			counter = 1;
-		}
-
-		updatePlanePositions();
 	}
-
-	
-
-	
 }
-
