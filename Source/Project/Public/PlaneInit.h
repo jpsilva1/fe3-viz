@@ -42,6 +42,9 @@ private:
 	// Set to true once valid path used
 	bool active = false;
 
+	// Use as a counter to update lat/lon less often 
+	int latLonCounter = 0;
+
 public:	
 	// Sets default values for this component's properties
 	APlaneInit();
@@ -83,7 +86,7 @@ protected:
 
 public:	
 	// Called every frame
-	// virtual void Tick(float DeltaTime) override;
+	//virtual void Tick(float DeltaTime) override;
 	virtual void AsyncPhysicsTickActor(float DeltaTime, float SimTime) override;
 
 	// To input file path, will parse and initialize planes

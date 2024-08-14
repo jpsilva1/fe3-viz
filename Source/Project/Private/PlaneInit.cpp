@@ -61,6 +61,7 @@ void APlaneInit::inputFile_Implementation() {
 						parser.ParseData(FileContent);
 						coordinates = parser.getCoordinates();
 						rotationGiven = false;
+						cartesian = true;
 					}
 					else if (SelectedPath.Contains(".csv")) {
 						DataframeParser parser;
@@ -197,9 +198,10 @@ void APlaneInit::updatePlanePositions(float DeltaTime) {
 		} else {
 			loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
 			//loc = FVector(loc.X / 10, loc.Y / 10, loc.Z);
-			actor->SetActorLocation(UKismetMathLibrary::VInterpTo(actor->GetActorLocation(), loc, DeltaTime, 0.005f));
+			actor->SetActorLocation(UKismetMathLibrary::VInterpTo(actor->GetActorLocation(), loc, DeltaTime * 0.01f, 0.005f));
 
 		}
+		
 		
 		//if (rotationGiven) {
 		//	FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
@@ -220,9 +222,9 @@ FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	}
 	result = UKismetMathLibrary::MakeRotFromXZ(start - end, up);
 	//result = UKismetMathLibrary::FindLookAtRotation(end, start);
-	UE_LOG(LogTemp, Warning, TEXT("Start: %f, %f, %f"), start.X, start.Y, start.Z);
+	/*UE_LOG(LogTemp, Warning, TEXT("Start: %f, %f, %f"), start.X, start.Y, start.Z);
 	UE_LOG(LogTemp, Warning, TEXT("End: %f, %f, %f"), end.X, end.Y, end.Z);
-	UE_LOG(LogTemp, Warning, TEXT("Rot: %f, %f, %f"), result.Pitch, result.Yaw, result.Roll);
+	UE_LOG(LogTemp, Warning, TEXT("Rot: %f, %f, %f"), result.Pitch, result.Yaw, result.Roll);*/
 	return result;
 
 }
@@ -265,11 +267,27 @@ void APlaneInit::setPathChanged_Implementation(bool input) {
 //{
 //	Super::Tick(DeltaTime);
 //
-//	if (active) {
+//	/*if (active) {
 //		if (play) {
 //			counter += 1;
 //			if (counter >= maxCount) counter = 1;
 //			updatePlanePositions(DeltaTime);
+//		}
+//	}*/
+//
+//	if (active && play && cartesian) {
+//		counter += 1;
+//		if (counter >= maxCount) counter = 1;
+//		updatePlanePositions(DeltaTime);
+//	} 
+//	else if (active && play && !cartesian) {
+//		if (latLonCounter % 50 == 0) {
+//			counter += 1;
+//			if (counter >= maxCount) counter = 1;
+//			updatePlanePositions(DeltaTime);
+//		}
+//		else {
+//			latLonCounter++;
 //		}
 //	}
 //}
@@ -277,11 +295,22 @@ void APlaneInit::setPathChanged_Implementation(bool input) {
 void APlaneInit::AsyncPhysicsTickActor(float DeltaTime, float SimTime) {
 	//Super::Tick(DeltaTime);
 
-	if (active) {
-		if (play) {
+	if (active && play && cartesian) {
+		counter += 1;
+		if (counter >= maxCount) counter = 1;
+		updatePlanePositions(SimTime);
+	} 
+	else if (active && play && !cartesian) {
+		if (latLonCounter % 100 == 0) {
 			counter += 1;
 			if (counter >= maxCount) counter = 1;
 			updatePlanePositions(SimTime);
 		}
+		else {
+			latLonCounter++;
+		}
 	}
+
+	
 }
+
