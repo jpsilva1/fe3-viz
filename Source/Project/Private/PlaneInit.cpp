@@ -242,7 +242,7 @@ void APlaneInit::changeMesh_Implementation(const FString& input) {
 
 
 
-APlaneActor* APlaneInit::getPlane_Implementation(const int& index) {
+APlaneActor* APlaneInit::getPlane_Implementation(int index) {
 	return planeActors[index];
 }
 

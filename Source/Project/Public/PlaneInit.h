@@ -110,7 +110,7 @@ public:
 
 	// To get pointer to plane based on plane number
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	APlaneActor* getPlane(const int& index);
+	APlaneActor* getPlane(int index);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	float getCounter();
