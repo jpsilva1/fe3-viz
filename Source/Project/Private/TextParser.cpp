@@ -16,17 +16,15 @@ TMap<std::int32_t, TArray<TArray<float>>> TextParser::getCoordinates() {
 	return coordinates;
 }
 
-
 void TextParser::ParseData(FString& input) {
 	// start from second line to create mapping of plane number to plane id
 	// loop through the rest of the lines which are time in seconds, plane number, x, y, z, attitude
-
 	TArray<FString> lines;
 	input.ParseIntoArray(lines, TEXT("\n"), false);
 	for (std::int32_t i = 1; i < lines.Num(); i++) {
 		TArray<FString> words;
 		lines[i].ParseIntoArray(words, TEXT(","), false);
-		if (words.Num() > 1) { //remove empty lines
+		if (words.Num() > 1) { // Remove empty lines
 			if (words[1].Contains(TEXT("fid")) || words[1].Contains(TEXT("NASA"))) {
 				// add to mapping of planes
 				// line should have format "plane number, plane id, plane type"
@@ -70,8 +68,6 @@ void TextParser::ParseData(FString& input) {
 				if (seconds > maxSeconds) maxSeconds = seconds;
 			}
 		}
-		
-
 	}
 	int lastNum = coordinates.Num() - 1;
 	TArray<TArray<float>> lastCoord = coordinates[lastNum];
@@ -107,7 +103,6 @@ void TextParser::FillData(float stepSize) {
 				coord[6].Insert(yaw, 0);
 			}
 		}
-		
 		if (endTime < maxSeconds) {
 			int num = coord[0].Num() - 1;
 			float x = coord[1][num];
@@ -128,14 +123,11 @@ void TextParser::FillData(float stepSize) {
 			}
 		}
 	}
-
 }
 
 void TextParser::PrintData() {
-
 	for (int j = 0; j < coordinates.Num(); j++) {
 		TArray<TArray<float>>& coord = coordinates[j];
-
 		for (int i = 0; i < coord[0].Num(); i++) {
 			float seconds = coord[0][i];
 			float x = coord[1][i];
@@ -144,13 +136,7 @@ void TextParser::PrintData() {
 			float roll = coord[4][i];
 			float pitch = coord[5][i];
 			float yaw = coord[6][i];
-
 			UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f, r: %f, p: %f, y: %f"), seconds, x, y, z, roll, pitch, yaw);
 		}
-
 	}
-	
-
-	
-
 }

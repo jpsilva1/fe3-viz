@@ -74,13 +74,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool cartesian = true;
 
+	// Set to true once path is set in game
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool pathChanged = false;
 
 	UPROPERTY(EditAnywhere)
 	ACesiumGeoreference* georef;
-
-
 
 protected:
 	// Called when the game starts
@@ -96,7 +95,7 @@ public:
 	void inputFile();
 
 	// To parse second file with vehicle information
-	// Only for .txt files from fe3
+	// Only for .txt files from fe3 or .csv files in specific format
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void inputVehicleFile();
 

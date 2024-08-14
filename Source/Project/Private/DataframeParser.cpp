@@ -8,19 +8,6 @@ DataframeParser::~DataframeParser()
 {
 }
 
-TArray<float> DataframeParser::toCartesian(float lat, float lon, float alt) {
-	float radius = 6371 + alt; // radius of earth added to elevation
-	float x = radius * FMath::Cos(lat) * FMath::Cos(lon);
-	float y = radius * FMath::Cos(lat) * FMath::Sin(lon);
-	float z = radius * FMath::Sin(lat);
-	TArray<float> result = { x, y, z };
-	/*FVector original = FVector(lat, lon, alt);
-	FVector resultVec = georef->TransformLongitudeLatitudeHeightPositionToUnreal(original);
-	TArray<float> result = { (float) resultVec.X, (float)resultVec.Y, (float) resultVec.Z };*/
-	return result;
-
-}
-
 void DataframeParser::ParseData(FString& input, bool cartesian) {
 	TArray<TArray<float>> parsedCSV;
 
@@ -32,15 +19,13 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 
 	TArray<FString> floatArr;
 
-
 	//REMEMBER TO CHANGE BACK TO CSVLines.Num()
-	for (int i = 1; i < 1000; i++) { // make sure to skip first line of headers
+	for (int i = 1; i < 1000; i++) { // Skips first line of headers
 		floatArr.Empty();
 		CSVLines[i].ParseIntoArray(floatArr, CSVDelimeters, 1);
 
 		if (floatArr[7] == "1") { // remove non-active planes
-			if (!planes.Contains(floatArr[1])) {
-				// init vectors into map
+			if (!planes.Contains(floatArr[1])) { // Initialize if plane id does not exist in map yet
 				TArray<float> seconds;
 				TArray<float> lat;
 				TArray<float> lon;
@@ -63,13 +48,6 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 			float y = FCString::Atof(*floatArr[4]);
 			float z = FCString::Atof(*floatArr[5]);
 
-			/*if (!cartesian) {
-				TArray<float> result = toCartesian(x, y, z);
-				x = result[0];
-				y = result[1];
-				z = result[2];
-			}*/
-
 			coord[0].Add(seconds);
 			coord[1].Add(x);
 			coord[2].Add(y);
@@ -82,6 +60,7 @@ void DataframeParser::ParseData(FString& input, bool cartesian) {
 	FillData(1.0f);
 }
 
+// Fill beginning and end of arrays so all of the timeframes match
 void DataframeParser::FillData(float stepSize) {
 	for (auto& curr : coordinates) {
 		TArray<TArray<float>>& coord = coordinates[curr.Key];
@@ -113,7 +92,6 @@ void DataframeParser::FillData(float stepSize) {
 			}
 		}
 	}
-
 }
 
 void DataframeParser::PrintData() {
@@ -127,10 +105,7 @@ void DataframeParser::PrintData() {
 
 		UE_LOG(LogTemp, Warning, TEXT("sec: %f, x: %f, y: %f, z: %f"), seconds, x, y, z);
 	}
-
-	
 	TArray<TArray<float>>& coord1 = coordinates[3];
-
 	for (int i = 0; i < coord1[0].Num(); i++) {
 		float seconds = coord1[0][i];
 		float x = coord1[1][i];
