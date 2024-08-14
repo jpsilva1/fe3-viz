@@ -25,6 +25,7 @@ void APlaneInit::InitPlaneActors() {
 			FVector end = FVector(coord[1][size], coord[2][size], coord[3][size]);
 			rot = createRotation(loc, end);
 		}
+		if (!cartesian) loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
 		FActorSpawnParameters spawnInfo;
 		APlaneActor* spawnedPlane = (APlaneActor*) GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
 		planeActors.Add(planeNum, spawnedPlane);
@@ -202,12 +203,6 @@ void APlaneInit::updatePlanePositions(float DeltaTime) {
 
 		}
 		
-		
-		//if (rotationGiven) {
-		//	FRotator rot = FRotator(coord[5][countInt], coord[6][countInt], coord[4][countInt]); // constructor is pitch, yaw, roll
-		//	actor->SetActorRotation(rot);
-		//}
-		
 	}
 }
 
@@ -217,14 +212,11 @@ FRotator APlaneInit::createRotation(FVector start, FVector end) {
 	FRotator result;
 	FVector up = FVector::UpVector;
 	if (!cartesian) {
-		 start = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(start.Y, start.X, start.Z * 10));
-		 end = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(end.Y, end.X, end.Z * 10));
-	}
+		start = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(start.Y, start.X, start.Z * 10));
+		end = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(end.Y, end.X, end.Z * 10));
+	} 
+
 	result = UKismetMathLibrary::MakeRotFromXZ(start - end, up);
-	//result = UKismetMathLibrary::FindLookAtRotation(end, start);
-	/*UE_LOG(LogTemp, Warning, TEXT("Start: %f, %f, %f"), start.X, start.Y, start.Z);
-	UE_LOG(LogTemp, Warning, TEXT("End: %f, %f, %f"), end.X, end.Y, end.Z);
-	UE_LOG(LogTemp, Warning, TEXT("Rot: %f, %f, %f"), result.Pitch, result.Yaw, result.Roll);*/
 	return result;
 
 }

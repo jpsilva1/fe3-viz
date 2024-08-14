@@ -7,6 +7,8 @@
 #include "PythonWrapper.h"
 #include "CesiumGeoreference.h"
 #include <glm/vec3.hpp>
+#include <CesiumGeospatial/Ellipsoid.h>
+#include <CesiumGeospatial/Cartographic.h>
 #include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
 #include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
 #include "Kismet/KismetMathLibrary.h"
