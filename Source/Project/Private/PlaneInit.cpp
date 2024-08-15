@@ -194,7 +194,7 @@ FRotator APlaneInit::createRotation(FVector start, FVector end) {
 void APlaneInit::AsyncPhysicsTickActor(float DeltaTime, float SimTime) {
 	if (active && play && cartesian) {
 		counter += 1;
-		if (counter >= maxCount) counter = 1;
+		if (counter >= maxCount) counter = 1; // Loop back to starting coordinate
 		updatePlanePositions(SimTime);
 	}
 	else if (active && play && !cartesian) {
