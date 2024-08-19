@@ -193,13 +193,13 @@ FRotator APlaneInit::createRotation(FVector start, FVector end) {
 // Basically like FixedUpdate, moves all the planes based on time
 void APlaneInit::AsyncPhysicsTickActor(float DeltaTime, float SimTime) {
 	if (active && play && cartesian) {
-		counter += 1;
+		counter += currStatus;
 		if (counter >= maxCount) counter = 1; // Loop back to starting coordinate
 		updatePlanePositions(SimTime);
 	}
 	else if (active && play && !cartesian) {
 		if (latLonCounter % 100 == 0) { // Updates non-cartesian coordinates slower since they are farther apart
-			counter += 1;
+			counter += currStatus;
 			if (counter >= maxCount) counter = 1;
 			updatePlanePositions(SimTime);
 		}

@@ -17,7 +17,6 @@
 #include "Components/StaticMeshComponent.h"
 #include "PlaneInit.generated.h"
 
-
 UCLASS()
 class PROJECT_API APlaneInit : public AActor
 {
@@ -80,6 +79,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	ACesiumGeoreference* georef;
+
+	// can be 1, 2, 3, or -1 to change playback
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int currStatus = 1;
 
 protected:
 	// Called when the game starts
