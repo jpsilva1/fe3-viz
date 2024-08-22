@@ -158,10 +158,17 @@ void APlaneInit::inputVehicleFile_Implementation() {
 	}
 }
 
+void APlaneInit::LiveData_Implementation() {
+	UPythonWrapper* wrapper = UPythonWrapper::Get();
+	wrapper->FunctionImplementedInPython();
+}
+
 // Called when the game starts
 void APlaneInit::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
 }
 
 // Change plane positions and rotations based on counter which is updated in AsyncPhysicsTickActor

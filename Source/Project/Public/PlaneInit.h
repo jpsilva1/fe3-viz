@@ -126,5 +126,8 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void setPathChanged(bool input);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void LiveData();
 		
 };

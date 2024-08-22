@@ -1,0 +1,2447 @@
+{
+	 "type": "record",
+	 "name": "IFF",
+	 "namespace": "com.atac.Avro",
+	 "fields": [
+		{
+			 "name": "recType",
+			 "type": "int"							
+		},
+		{
+			 "name": "recData",
+			 "type": [
+				{
+					 "type": "record",
+					 "name": "FileDescription",
+					 "fields": [
+						{
+							 "name": "fileType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "fileFormatVersion",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "Comment",
+					 "fields": [
+						{
+							 "name": "comment",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "Header",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"],
+							 "default": null						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "orig",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dest",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "opsType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "estOrig",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "estDest",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "modeSCode",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "TrackPoint",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coord1",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "significance",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "coord1Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "altAccur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "groundSpeed",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "course",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "rateOfClimb",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "altQualifier",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "altIndicator",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "trackPtStatus",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "leaderDir",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "scratchPad",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msawInhibitInd",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "assignedAltString",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "controllingFac",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "controllingSec",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "receivingFac",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "receivingSec",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "activeContr",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "primaryContr",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "kybrdSubset",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "kybrdSymbol",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "adsCode",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "opsType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "airportCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "trackNumber",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "tptReturnType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "modeSCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "sensorTrackNumberList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "spi",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dvs",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dupM3a",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "tid",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "FlightPlan",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"],
+							 "default": null						
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "orig",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dest",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "altCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "maxAlt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "assignedAltString",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "requestedAltString",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "route",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "estTime",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "fltCat",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "perfCat",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "opsType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "equipList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationTime",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "coordinationTimeType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "leaderDir",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "scratchPad1",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "scratchPad2",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "fixPairScratchPad",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefDepArrRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefDepRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefArrRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationPoint",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationPointType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "trackNumber",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "modeSCode",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "DataSourceProgram",
+					 "fields": [
+						{
+							 "name": "dataSource",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "programName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "programVersion",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "Sectorization",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "sectorizationString",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "MSAW",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coord1",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "significance",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "coord1Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "altAccur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "msawType",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "msawTimeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "msawLocCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "msawMinSafeAlt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "msawIndex1",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "msawIndex2",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "msawVolID",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "FlightProgress",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "orig",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dest",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "depTimeType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "arrTimeType",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "AircraftState",
+					 "fields": [
+						{
+							 "name": "recTimeStr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coord1",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "pitchAngle",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "trueHeading",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "rollAngle",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "trueAirSpeed",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltPhaseIndicator",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+					 "type": "record",
+					 "name": "EOF",
+					 "fields": [
+						{
+							 "name": "comment",
+							 "type": ["null", "string"], "default": null				
+						}
+					]
+				},
+				{
+				  "name": "ADL",
+				  "type": "record",
+				  "fields": [
+				    {
+				      "name": "cKey",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+					"name": "fltKey",
+					"type": [
+					  "null", 
+					  "int"
+					  ], 
+					  "default": null				
+				    },
+				    {
+				      "name": "acId",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETMSID",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "dest",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ACENTR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "orig",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DCENTR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ENTRY",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "EXIT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DFIX",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "EDFT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DTRSN",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "AFIX",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "EAFT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "STAR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "STRSN",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "USR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "TYPE",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTG",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CLS",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ARTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ARTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CR_TIME",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "SGTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "SGTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "IGTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "IENTRY",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "IGTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "PGTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "PGTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "PETE",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LRTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LRTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LGTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LGTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ERTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "EENTRY",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ERTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OUT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OFF",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ON",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "IN",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OETD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OENTRY",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OETA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "BETD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "BENTRY",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "BETA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OCTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "OCTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ASLOT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTL_ELEM",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTL_PRGM",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTL_TYPE",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTL_EXMPT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "SL_HOLD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DVREC",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DO",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "UX",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "FX",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "RZ",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "RS",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "TO",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DV",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "RM",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ALD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "GDP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "AFP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTOP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DAS",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "GSD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "TOD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CTL_ALM",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "CDM_MBR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "SUB",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "MAJOR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "GCD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LTOD",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "NRP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "LFG",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "III",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ATV",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "SWP",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "DVT",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ADC",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "FCA",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "WXR",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ADLDate",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ADLTime",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ADLHour",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETAprefix",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETAdate",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETAtime",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETAhour",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETDprefix",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETDdate",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETDtime",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "ETDhour",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    },
+				    {
+				      "name": "opsType",
+				      "type": [
+				        "null",
+				        "string"
+				      ],
+				      "default": null
+				    }
+				  ]
+				},
+				{
+				"name": "FUSR",
+				"type": "record",
+  				"fields": [
+ 						{
+							 "name": "position_timestamp",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTime",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "fltKey",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "bcnCode",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msgType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "recTypeCat",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "cKey",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coord1",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "significance",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "coord1Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "coord2Accur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "altAccur",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "groundSpeed",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "course",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "rateOfClimb",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "altQualifier",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "altIndicator",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "trackPtStatus",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "leaderDir",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "scratchPad",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "msawInhibitInd",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "assignedAltString",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "controllingFac",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "controllingSec",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "receivingFac",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "receivingSec",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "activeContr",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "primaryContr",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "kybrdSubset",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "kybrdSymbol",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "adsCode",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "opsType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "airportCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "trackNumber",
+							 "type": ["null", "long"], "default": null				
+						},
+						{
+							 "name": "tptReturnType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "modeSCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "sensorTrackNumberList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "spi",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dvs",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dupM3a",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "tid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "orig",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "dest",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "altCode",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "maxAlt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "requestedAltString",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "route",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "estTime",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "fltCat",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "perfCat",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "equipList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationTime",
+							 "type": ["null", "int"], "default": null				
+						},
+						{
+							 "name": "coordinationTimeType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "scratchPad1",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "scratchPad2",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "fixPairScratchPad",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefDepArrRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefDepRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "prefArrRoute",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationPoint",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "coordinationPointType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acEquipQualifier",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "acRegistration",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "altFiled",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "arrAerodromeIataName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrAerodromeIcaoName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFix",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFixSourceData",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyAssigned",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrSpotActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrSpotAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrSpotPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+ 						{
+							 "name": "arrFixActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFixEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFixSchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFixTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrFixUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrMovementAreaActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrMovementAreaTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrMovementAreaUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyControlledTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyMeteredTimeFrozen",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyProposedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwySchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandInitialTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandProposedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandSchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrLandingClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrTaxiClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrRwyCrossingClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrStandControlledTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "arrSurfaceFltState",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "carrier",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "centerList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "changes",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "cpdlcDclAvailable",
+							 "type": ["null", "string"], "default": null				
+						},
+ 						{
+							 "name": "depAerodromeIataName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depAerodromeIcaoName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFix",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixSourceData",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyAssigned",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depSpotActual",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depSpotAirline",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depSpotPredicted",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixSchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depFixUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depMovementAreaActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depMovementAreaTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depMovementAreaUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyControlledTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyMeteredTimeFrozen",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyProposedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwySchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandEstTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandInitialTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandProposedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandSchTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStartupApprovalTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStartupRequestActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStartupApprovalActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandReadyActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depStandTargetTime",
+							 "type": ["null", "string"], "default": null				
+						},
+ 						{
+							 "name": "depPushbackClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTaxiClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depRwyCrossingClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depQueueDuration",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depQueueEntryActualTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depQueueEntryUndelayedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depQueueEntryTargetedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depSurfaceFltState",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTaxiUndelayedDuration",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTaxiEstDuration",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTaxiActualDuration",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "depTakeoffClearanceIssuedTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "distanceTotal",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "eramGufi",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "estDepClearanceTime",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "filedFlt",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "fixList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "fltType",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "gufi",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "internalDep",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "international",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "lastUpdateSource",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "routeFiled",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "sectorList",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "sensitiveDataExt",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "speedFiled",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "sourceFAC",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "standardInstrumentDep",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "standardInstrumentArr",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "surfaceAptFaaLid",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "surfaceAptIataName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "surfaceAptIcaoName",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "surfaceFltState",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "systemId",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "timestamp",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "timestampFuserReceived",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "timestampSource",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "timestampSourceProcessed",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "timestampSourceReceived",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "TRAJ_alt",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "TRAJ_course",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "TRAJ_lat",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "TRAJ_lon",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "TRAJ_source",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "TRAJ_speed",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "TRAJ_timestamp",
+							 "type": ["null", "string"], "default": null				
+						},
+						{
+							 "name": "TRAJ_distanceTotal",
+							 "type": ["null", "double"], "default": null				
+						},
+						{
+							 "name": "wakeTurbulenceCat",
+							 "type": ["null", "string"], "default": null				
+						}
+   					]
+				}								
+			]
+		}
+	]
+}

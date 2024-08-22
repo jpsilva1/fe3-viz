@@ -20,4 +20,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = Python)
 	void FunctionImplementedInPython() const;
 	
+	UFUNCTION(BlueprintImplementableEvent, Category = Python)
+	void GetKafkaData() const;
 };
