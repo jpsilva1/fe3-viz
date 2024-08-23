@@ -46,6 +46,18 @@ private:
 	// Use as a counter to update lat/lon less often 
 	int latLonCounter = 0;
 
+	// Set to true to use live data
+	bool live = false;
+
+	// For running the Kafka python code
+	UPythonWrapper* wrapper;
+
+	// Live data uses strings so need a different mapping
+	TMap<FString, APlaneActor*> livePlaneActors;
+
+	// Different logic for updating plane positions if using live data
+	void updateLiveData(float DeltaTime);
+
 public:	
 	// Sets default values for this component's properties
 	APlaneInit();

@@ -158,9 +158,40 @@ void APlaneInit::inputVehicleFile_Implementation() {
 	}
 }
 
+//
 void APlaneInit::LiveData_Implementation() {
-	UPythonWrapper* wrapper = UPythonWrapper::Get();
-	wrapper->FunctionImplementedInPython();
+	wrapper = UPythonWrapper::Get();
+	live = true;
+}
+
+void APlaneInit::updateLiveData(float DeltaTime) {
+	// Run function in python, then retrieve data from csv
+	wrapper->GetKafkaData();
+	FString filePath = FPaths::ProjectContentDir();
+	filePath.Append("Python/out.csv");
+	FString FileContent;
+	FFileHelper::LoadFileToString(FileContent, *filePath);
+	
+	// Loop through each entry and populate mapping of acId to plane actor 
+	// If plane actor exists, update its position
+	// If not, create a new one
+	// If there is no updated entry, remove the actor from the mapping and from the scene
+	const TCHAR* Terminators[] = { L"\r", L"\n" };
+	const TCHAR* CSVDelimeters[] = { TEXT(",") };
+
+	TArray<FString> CSVLines;
+	FileContent.ParseIntoArray(CSVLines, Terminators, 2);
+
+	TArray<FString> floatArr;
+
+	for (int i = 1; i < CSVLines.Num(); i++) { // Skips first line of headers
+		floatArr.Empty();
+		CSVLines[i].ParseIntoArray(floatArr, CSVDelimeters, 1);
+
+	}
+
+
+
 }
 
 // Called when the game starts
@@ -211,6 +242,9 @@ void APlaneInit::AsyncPhysicsTickActor(float DeltaTime, float SimTime) {
 			updatePlanePositions(SimTime);
 		}
 		else latLonCounter++;
+	}
+	else if (live) {
+		updateLiveData(SimTime);
 	}
 }
 

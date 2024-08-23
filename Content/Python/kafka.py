@@ -7,13 +7,45 @@ import avro.schema
 import pandas as pd
 import math
 
-@unreal.uclass()
-class PythonWrapperImplementation(unreal.PythonWrapper):
-    def format_decoder(msg_value):
+lat_sfo = 37.6191
+long_sfo = 122.3816
+
+def format_decoder(schema, msg_value):
         message_bytes = io.BytesIO(msg_value)
         binary_decoder = BinaryDecoder(message_bytes)
         event_dict = DatumReader(schema).read(binary_decoder)
         return event_dict
+
+def select_iff_data(msgs):
+    feature_columns = ["source", "cKey", "bcnCode", "acId", "coord1", "coord2", "alt"]
+    iff_data = []
+    for m in msgs:
+        if(m["recType"] == 3):
+            iff_data.append(m["recData"])
+    df = pd.DataFrame.from_records(iff_data)
+    return df[feature_columns]
+
+def get_distance_from_airport(row, lat_to=lat_sfo, long_to=long_sfo):
+    lat_from = row["coord1"]
+    long_from = row["coord2"]
+    if (lat_from or long_from or lat_to or long_to) is None:
+        return 0
+    
+    lat_from = float(lat_from)
+    long_from = float(long_from)
+    radius = 3959
+
+    lat_distance = math.radians(lat_to - lat_from)
+    long_distance = math.radians(long_to - long_from)
+
+    a = math.sin(lat_distance / 2) ** 2 + math.cox(math.radians(lat_from)) * math.cos(math.radians(lat_to)) * math.sin(long_distance/2) ** 2
+
+    c = 2 * math.asin(math.sqrt(a))
+    return radius * c
+
+@unreal.uclass()
+class PythonWrapperImplementation(unreal.PythonWrapper):
+    
 
     @unreal.ufunction(override=True)
     def function_implemented_in_python(self):
@@ -38,57 +70,22 @@ class PythonWrapperImplementation(unreal.PythonWrapper):
         while running and count < max_count:
             msg = c.poll()
             if not msg.error():
-                msgs.append(format_decoder(msg.value()))
+                msgs.append(format_decoder(schema, msg.value()))
                 count += 1
             elif msg.error().code() != KafkaError._PARTITION_EOF:
                 print(msg.error())
                 running = False
         c.close()
 
-        feature_columns = ["source", "cKey", "bcnCode", "acId", "coord1", "coord2", "alt"]
-
-        # def select_iff_data():
-        #     iff_data = []
-        #     for m in msgs:
-        #         if(m["recType"] == 3):
-        #             iff_data.append(m["recData"])
-        #     df = pd.DataFrame.from_records(iff_data)
-        #     return df[feature_columns]
-
-        # iff_selected_df = select_iff_data()
-
+        iff_selected_df = select_iff_data(msgs)
         # iff_selected_df.head()
 
-        # # Coords of DFW 32.89694 -97.03806
-        # lat_dfw = 32.89694
-        # long_dfw = -97.03806
+        iff_selected_df["radius"] = iff_selected_df.apply(get_distance_from_airport, axis=1)
+        iff_selected_df[iff_selected_df["radius"] < 10].drop("source", axis=1).reset_index(drop=true)
+        # sfo_df = iff_selected_df[iff_selected_df["source"] == "SFO"].reset_index(drop=True)
 
-        # def get_distance_from_airport(row, lat_to=lat_dfw, long_to=long_dfw):
-        #     lat_from = row["coord1"]
-        #     long_from = row["coord2"]
-        #     if (lat_from or long_from or lat_to or long_to) is None:
-        #         return 0
-            
-        #     lat_from = float(lat_from)
-        #     long_from = float(long_from)
-        #     radius = 3959
-            
-        #     lat_distance = math.radians(lat_to - lat_from)
-        #     long_distance = math.radians(long_to - long_from)
-            
-        #     a = math.sin(lat_distance/2)**2 + math.cos(math.radians(lat_from))\
-        #         * math.cos(math.radians(lat_to)) * math.sin(long_distance/2)**2
-            
-        #     c = 2 * math.asin(math.sqrt(a))
-        #     total_distance = radius * c
-            
-        #     return total_distance
-
-        # def get_iff_distance(iff_df):
-        #     iff_df["radius"] = iff_df.apply(get_distance_from_airport, axis=1)
-        #     return iff_df[iff_df["radius"] < 20].drop("source", axis=1).reset_index(drop=True)
-
-        # iff_distance_df = get_iff_distance(iff_selected_df)
+        # write it to a csv to be accessed by c++ code
+        iff_selected_df.to_csv("../out.csv", mode='w')
 
 
 
