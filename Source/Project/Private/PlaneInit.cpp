@@ -187,7 +187,26 @@ void APlaneInit::updateLiveData(float DeltaTime) {
 	for (int i = 1; i < CSVLines.Num(); i++) { // Skips first line of headers
 		floatArr.Empty();
 		CSVLines[i].ParseIntoArray(floatArr, CSVDelimeters, 1);
+		FString acId = floatArr[3];
+		float x = FCString::Atof(*floatArr[4]);
+		float y = FCString::Atof(*floatArr[5]);
+		float z = FCString::Atof(*floatArr[6]);
+		FVector loc = FVector(x, y, z);
+		loc = georef->TransformLongitudeLatitudeHeightPositionToUnreal(FVector(loc.Y, loc.X, loc.Z * 10));
 
+		if (acId != "" && acId != "UNKN") { // remove planes without an ID since we will be using acID to keep track of them
+			if (livePlaneActors.Contains(acId)) {
+				APlaneActor* actor = livePlaneActors[acId];
+				actor->SetActorLocation(UKismetMathLibrary::VInterpTo(actor->GetActorLocation(), loc, DeltaTime * 0.01f, 0.005f));
+			}
+			else {
+				FRotator rot = FRotator(0.0f, 0.0f, 0.0f);
+				FActorSpawnParameters spawnInfo;
+				APlaneActor* spawnedPlane = (APlaneActor*)GetWorld()->SpawnActor<APlaneActor>(APlaneActor::StaticClass(), loc, rot, spawnInfo);
+				livePlaneActors.Add(acId, spawnedPlane);
+			}
+		}
+		
 	}
 
 

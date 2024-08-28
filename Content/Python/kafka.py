@@ -85,7 +85,7 @@ class PythonWrapperImplementation(unreal.PythonWrapper):
         # sfo_df = iff_selected_df[iff_selected_df["source"] == "SFO"].reset_index(drop=True)
 
         # write it to a csv to be accessed by c++ code
-        iff_selected_df.to_csv("../out.csv", mode='w')
+        iff_selected_df.to_csv("out.csv", mode='w')
 
 
 

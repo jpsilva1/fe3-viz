@@ -47,12 +47,14 @@ private:
 	int latLonCounter = 0;
 
 	// Set to true to use live data
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool live = false;
 
 	// For running the Kafka python code
 	UPythonWrapper* wrapper;
 
 	// Live data uses strings so need a different mapping
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FString, APlaneActor*> livePlaneActors;
 
 	// Different logic for updating plane positions if using live data
