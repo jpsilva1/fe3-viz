@@ -46,16 +46,8 @@ private:
 	// Use as a counter to update lat/lon less often 
 	int latLonCounter = 0;
 
-	// Set to true to use live data
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool live = false;
-
 	// For running the Kafka python code
 	UPythonWrapper* wrapper;
-
-	// Live data uses strings so need a different mapping
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FString, APlaneActor*> livePlaneActors;
 
 	// Different logic for updating plane positions if using live data
 	void updateLiveData(float DeltaTime);
@@ -97,6 +89,14 @@ public:
 	// can be 1, 2, 3, or -1 to change playback
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int currStatus = 1;
+
+	// Live data uses strings so need a different mapping
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FString, APlaneActor*> livePlaneActors;
+
+	// Set to true to use live data
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool live = false;
 
 protected:
 	// Called when the game starts
